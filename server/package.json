@@ -1,0 +1,15 @@
+{
+  "name": "proxicity",
+  "version": "0.1.0",
+  "description": "Calculator of service proximity for homes",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/froseberry/proxicity.git"
+  },
+  "author": "froseberry",
+  "license": "WTFPL",
+  "dependencies": {
+    "express": "^4.13.1"
+  }
+}

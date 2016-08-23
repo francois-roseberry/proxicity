@@ -1,0 +1,8 @@
+# Build artifacts
+node_modules/
+bower_components/
+target/
+
+# Other stuff
+npm-debug.log
+**/phantomjs.log
