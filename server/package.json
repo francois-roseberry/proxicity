@@ -7,9 +7,15 @@
     "type": "git",
     "url": "git+https://gitlab.com/froseberry/proxicity.git"
   },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
   "author": "froseberry",
   "license": "WTFPL",
   "dependencies": {
-    "express": "^4.13.1"
+    "chai": "^3.5.0",
+    "express": "^4.13.1",
+    "mocha": "^3.0.2",
+    "request": "^2.74.0"
   }
 }
