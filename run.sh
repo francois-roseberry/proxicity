@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-node server/server.js client/
+node server/src/server.js client/
