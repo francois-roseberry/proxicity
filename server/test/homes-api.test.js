@@ -28,4 +28,16 @@ describe('Homes API', function () {
 			expect(body.homes[index].name).to.equal(home.name);
 		});
 	});
+	
+	it('contains all home adresses', function () {
+		homes().forEach(function (home, index) {
+			expect(body.homes[index].address).to.equal(home.address);
+		});
+	});
+	
+	it('contains all home coordinates', function () {
+		homes().forEach(function (home, index) {
+			expect(body.homes[index].coordinates).to.deep.equal(home.coordinates);
+		});
+	});
 });
