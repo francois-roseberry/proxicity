@@ -8,14 +8,22 @@
     "url": "git+https://gitlab.com/froseberry/proxicity.git"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "start": "node src/main/server.js ../client",
+    "lint": "jshint --config build/jshintrc src",
+    "pretest": "npm run lint && rm -f *.test.json",
+    "test": "mocha \"src/test\"",
+    "posttest": "rm -f *.test.json"
   },
   "author": "froseberry",
   "license": "WTFPL",
   "dependencies": {
     "chai": "^3.5.0",
+    "cheerio": "^0.22.0",
     "express": "^4.13.1",
+    "jshint": "^2.9.3",
     "mocha": "^3.0.2",
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "rx": "^4.1.0",
+    "underscore": "^1.8.3"
   }
 }

@@ -4,5 +4,6 @@ bower_components/
 target/
 
 # Other stuff
+cache/
 npm-debug.log
 **/phantomjs.log
