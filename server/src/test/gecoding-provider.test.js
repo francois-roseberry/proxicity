@@ -6,7 +6,7 @@
 	var _ = require('underscore');
 	var GeocodingProvider = require('../main/geocoding-provider.js');
 
-	describe.only('A geocoding provider', function () {
+	describe('A geocoding provider', function () {
 		var FAKE_HOMES = [{
 			name: 'House A', 
 			address: '2323 Avenue Chapdelaine, Ville de Québec, QC G1V 5B9, Canada'

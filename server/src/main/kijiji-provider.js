@@ -39,7 +39,9 @@
 					return {
 						name: name,
 						url: url,
-						address: details.address};
+						price: details.price,
+						address: details.address
+					};
 				});
 				observables.push(observable);
 			});
@@ -69,10 +71,13 @@
 			// Even though there's only one node, we have to do an implicit iteration
 			$('.ad-attributes').each(function () {
 				var table = $(this);
-				var trNode = table.find('#MapLink').parent();
-				$('a', trNode).remove();
 				
-				subject.onNext({address: trNode.text().trim()});
+				var priceNode = table.find('[itemprop=price] strong');
+				
+				var trAdressNode = table.find('#MapLink').parent();
+				$('a', trAdressNode).remove();
+				
+				subject.onNext({address: trAdressNode.text().trim(), price: priceNode.text()});
 			});
 			
 			subject.onCompleted();

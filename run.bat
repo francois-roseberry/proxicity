@@ -1,1 +1,1 @@
-node server/src/main/server.js client
+node server/src/main/server.js client/target/dist
