@@ -5,7 +5,7 @@
 	var request = require('request');
 	var homes = require('../main/fake-homes.js').homes;
 
-	describe('Homes API', function () {
+	describe.only('Homes API', function () {
 		var response;
 		var body;
 		

@@ -1,0 +1,15 @@
+.legend-container {
+	float: right;
+	height: 100%;
+	overflow: auto;
+}
+
+.legend-items {
+	list-style-type: none;
+	margin-right: 30px;
+}
+
+.legend-item {
+	position: relative;
+	border-bottom: 1px solid #ccc;
+}

@@ -1,0 +1,10 @@
+.map4-loading-indicator {
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    right: 25%;
+    font-size: 1.1em;
+    line-height: 1.1em;
+    color: #666;
+    text-align: center;
+}
