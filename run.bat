@@ -1,1 +1,1 @@
-node server/src/main/server.js -w client/target/dist -c cache
+node server/src/main/main.js -w client/target/dist -c cache

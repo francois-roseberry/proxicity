@@ -4,7 +4,7 @@
 	var fs = require('fs');
 	var Rx = require('rx');
 	var _ = require('underscore');
-	var precondition = require('./infrastructure/contract.js').precondition;
+	var precondition = require('./infrastructure/contract').precondition;
 
 	function CachedProvider(provider, filename) {
 		precondition(provider && _.isFunction(provider.getHomes), 'A CachedProvider requires a provider');
