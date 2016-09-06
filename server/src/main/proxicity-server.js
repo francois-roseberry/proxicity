@@ -21,7 +21,7 @@
 			config.provider.getHomes().subscribe(function (homes) {
 				response.json(homes);
 			}, function (error) {
-				response.json({messsage: error});
+				response.status(500).json({message: error.message});
 			}, _.noop);
 		});
 		

@@ -2,8 +2,6 @@
 	"use strict";
 	
 	var path = require('path');
-	var homes = require('./fake-homes.js').homes;
-	var Rx = require('rx');
 	var ProxicityServer = require('./proxicity-server');
 	var program = require('commander');
 	
