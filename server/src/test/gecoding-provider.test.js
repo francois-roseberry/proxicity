@@ -19,7 +19,6 @@
 			geocodingProvider = new GeocodingProvider(createFakeProvider());
 			
 			geocodingProvider.getHomes().subscribe(function (homes) {
-				console.log('Got geocoded homes');
 				homesProduced = homes;
 			}, done, done);
 		});
