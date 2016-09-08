@@ -5,9 +5,10 @@
 	var ProxicityServer = require('./proxicity-server');
 	var program = require('commander');
 	
-	var CachedProvider = require('./cached-provider.js');
-	var KijijiProvider = require('./kijiji-provider.js');
-	var GeocodingProvider = require('./geocoding-provider.js');
+	var CachedProvider = require('./cached-provider');
+	var KijijiProvider = require('./kijiji-provider');
+	var GeocodingProvider = require('./geocoding-provider');
+	var PriceExtractor = require('./price-extractor');
 	
 	program
 		.version('0.1')
@@ -26,14 +27,16 @@
 	});
 	
 	function createProvider() {
-		return new CachedProvider(
-			new GeocodingProvider(
-				new CachedProvider(
-					new KijijiProvider(),
-					path.join(program.cache, 'kijiji-homes.json')
-				)
-			),
-			path.join(program.cache, 'geocoded-homes.json')
+		return new PriceExtractor(
+			new CachedProvider(
+				new GeocodingProvider(
+					new CachedProvider(
+						new KijijiProvider(),
+						path.join(program.cache, 'kijiji-homes.json')
+					)
+				),
+				path.join(program.cache, 'geocoded-homes.json')
+			)
 		);
 	}
 }());
