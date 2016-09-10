@@ -40,7 +40,7 @@
 		var basePath = path.normalize(path.join(__dirname, '..', '..'));
 		
 		return {
-			script: path.join(basePath, 'server', 'src', 'main', 'server.js'),
+			script: path.join(basePath, 'server', 'src', 'main', 'main.js'),
 			clientDirectory: path.join(basePath, 'client', 'target', 'dist'),
 			cacheDirectory: path.join(basePath, 'cache')
 		};
