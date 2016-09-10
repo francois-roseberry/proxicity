@@ -38,10 +38,18 @@
 		
 						L.geoJson(model.geojson(), {
 							pointToLayer: function (feature, latlng) {
-								return L.circleMarker(latlng);
+								return L.circleMarker(latlng, {
+									radius: 6,
+									stroke: false,
+									fillOpacity: 1,
+									fillColor: feature.properties.color
+								});
 							},
 							onEachFeature: function (feature, layer) {
-								layer.bindPopup(feature.properties.name);
+								layer.bindPopup(
+									feature.properties.name + '<br/><br/>' + i18n.PRICE + ' : ' +
+									(feature.properties.price ?
+										feature.properties.price + ' $' : i18n.DATA_UNAVAILABLE));
 							}
 						}).addTo(map);
 						

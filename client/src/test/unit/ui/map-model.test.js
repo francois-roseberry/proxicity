@@ -33,5 +33,21 @@
 				expect(feature.properties.address).to.eql(home.address);
 			});
 		});
+		
+		it('give the min color to the features corresponding to homes with the minimum price', function () {
+			expect(model.geojson().features[0].properties.color).to.eql(MapModel.MIN_COLOR);
+		});
+		
+		it('give the max color to the features corresponding to homes with the maximum price', function () {
+			expect(model.geojson().features[1].properties.color).to.eql(MapModel.MAX_COLOR);
+		});
+		
+		it('give an intermediate color to the features corresponding to homes with prices between', function () {
+			expect(model.geojson().features[2].properties.color).to.eql('#800080');
+		});
+		
+		it('give the no-data color to the features corresponding to homes with no prices', function () {
+			expect(model.geojson().features[3].properties.color).to.eql(MapModel.NO_DATA_COLOR);
+		});
 	});
 }());
