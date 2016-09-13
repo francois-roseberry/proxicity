@@ -8,15 +8,18 @@
 		precondition(container, 'Legend Widget requires a container');
 		precondition(model, 'Legend Widget requires a model');
 		
-		var list = d3.select(container[0])
+		var legendContainer = d3.select(container[0])
 			.append('div')
-			.classed('legend-container', true)
+			.classed('legend-container', true);
+			
+		legendContainer.append('div')
+			.classed('legend-header', true)
+			.append('span')
+			.text(model.geojson().features.length + ' homes');
+		
+		var list = legendContainer
 			.append('ul')
 			.classed('legend-items', true);
-			
-		list.append('li')
-			.classed('legend-item', true)
-			.text(model.geojson().features.length + ' homes');
 			
 		var boundedCategory = list.append('li')
 			.classed({
@@ -25,7 +28,7 @@
 			});
 			
 		var svg = boundedCategory.append('svg')
-			.classed('legend-bounded-thumbnail', true)
+			.classed('legend-thumbnail', true)
 			.attr({
 				width: 25,
 				height: 100

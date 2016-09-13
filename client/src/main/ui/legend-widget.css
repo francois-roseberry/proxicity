@@ -2,16 +2,22 @@
 	float: right;
 	height: 100%;
 	overflow: auto;
+	margin-left: 15px;
+}
+
+.legend-header {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
 }
 
 .legend-items {
 	list-style-type: none;
-	margin-right: 30px;
+	margin-right: 20px;
+	padding-left: 10px;
 }
 
 .legend-item {
 	position: relative;
-	border-bottom: 1px solid #ccc;
 }
 
 .legend-bounds-upper {
@@ -22,4 +28,9 @@
 .legend-bounds-lower {
     position: absolute;
     bottom: 0;
+}
+
+.legend-thumbnail {
+	margin-right: 4px;
+	margin-top: 4px;
 }

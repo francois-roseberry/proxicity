@@ -25,12 +25,16 @@
 			domContext.assertOneOf('.legend-container');
 		});
 		
+		it('render a header region', function () {
+			domContext.assertOneOf('.legend-header');
+		});
+		
 		it('renders a list of items', function () {
 			domContext.assertOneOf('.legend-items');
 		});
 		
-		it('renders three items in the list', function () {
-			domContext.assertElementCount('.legend-item', 3);
+		it('renders two items in the list', function () {
+			domContext.assertElementCount('.legend-item', 2);
 		});
 		
 		it('renders a no-data category with a thumbnail', function () {
@@ -40,7 +44,7 @@
 		
 		it('renders a bounded category with a thumbnail and max and min', function () {
 			domContext.assertOneOf('.legend-bounded-category');
-			domContext.assertOneOf('.legend-bounded-category .legend-bounded-thumbnail');
+			domContext.assertOneOf('.legend-bounded-category .legend-thumbnail');
 			domContext.assertOneOf('.legend-bounded-category .legend-bounds-upper');
 			domContext.assertOneOf('.legend-bounded-category .legend-bounds-lower');
 		});
