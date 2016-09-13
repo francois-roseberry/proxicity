@@ -14,23 +14,52 @@
     };
 	
 	function MapModel(homes) {
-		this._geojson = geojsonFrom(homes);
+		this._bounds = boundsOf(homes);
+		this._geojson = geojsonFrom(homes, this._bounds);
 	}
 	
 	MapModel.prototype.geojson = function () {
 		return this._geojson;
 	};
 	
-	function geojsonFrom(homes) {
+	MapModel.prototype.bounds = function () {
+		return {
+			max : {
+				color: exports.MAX_COLOR,
+				value: this._bounds.max
+			},
+			min: {
+				color: exports.MIN_COLOR,
+				value: this._bounds.min
+			}
+		};
+	};
+	
+	MapModel.prototype.noDataCategory = function () {
+		return {
+			color: exports.NO_DATA_COLOR,
+			count: this._geojson.features.filter(function (feature) {
+				return !feature.properties.price;
+			}).length
+		};
+	};
+	
+	function boundsOf(homes) {
 		var data = homes.filter(function (home) {
 				return !!home.price;
 			}).map(function (home) {
 				return home.price;
 			});
-		var minimum = d3.min(data);
-        var maximum = d3.max(data);
+		
+		return {
+			max: d3.max(data),
+			min: d3.min(data)
+		};
+	}
+	
+	function geojsonFrom(homes, bounds) {
         var scale = d3.scale.linear()
-            .domain([minimum, maximum])
+            .domain([bounds.min, bounds.max])
             .range([exports.MIN_COLOR, exports.MAX_COLOR]);
 			
 		return {

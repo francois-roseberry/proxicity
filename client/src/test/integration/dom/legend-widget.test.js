@@ -29,8 +29,20 @@
 			domContext.assertOneOf('.legend-items');
 		});
 		
-		it('renders only an item in the list', function () {
-			domContext.assertOneOf('.legend-item');
+		it('renders three items in the list', function () {
+			domContext.assertElementCount('.legend-item', 3);
+		});
+		
+		it('renders a no-data category with a thumbnail', function () {
+			domContext.assertOneOf('.legend-no-data-category');
+			domContext.assertOneOf('.legend-no-data-category .legend-thumbnail');
+		});
+		
+		it('renders a bounded category with a thumbnail and max and min', function () {
+			domContext.assertOneOf('.legend-bounded-category');
+			domContext.assertOneOf('.legend-bounded-category .legend-bounded-thumbnail');
+			domContext.assertOneOf('.legend-bounded-category .legend-bounds-upper');
+			domContext.assertOneOf('.legend-bounded-category .legend-bounds-lower');
 		});
 	});
 }());

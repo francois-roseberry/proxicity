@@ -13,3 +13,13 @@
 	position: relative;
 	border-bottom: 1px solid #ccc;
 }
+
+.legend-bounds-upper {
+    position: absolute;
+    top: 0;
+}
+
+.legend-bounds-lower {
+    position: absolute;
+    bottom: 0;
+}
