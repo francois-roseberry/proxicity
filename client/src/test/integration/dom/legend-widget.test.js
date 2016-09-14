@@ -33,8 +33,8 @@
 			domContext.assertOneOf('.legend-items');
 		});
 		
-		it('renders two items in the list', function () {
-			domContext.assertElementCount('.legend-item', 2);
+		it('renders an item in the list for each category', function () {
+			domContext.assertElementCount('.legend-item', model.categories().length);
 		});
 		
 		it('renders a no-data category with a thumbnail', function () {
@@ -42,7 +42,7 @@
 			domContext.assertOneOf('.legend-no-data-category .legend-thumbnail');
 		});
 		
-		it('renders a bounded category with a thumbnail and max and min', function () {
+		it('renders a bounded category with a thumbnail and bounds', function () {
 			domContext.assertOneOf('.legend-bounded-category');
 			domContext.assertOneOf('.legend-bounded-category .legend-thumbnail');
 			domContext.assertOneOf('.legend-bounded-category .legend-bounds-upper');

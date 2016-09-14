@@ -22,26 +22,22 @@
 		return this._geojson;
 	};
 	
-	MapModel.prototype.bounds = function () {
-		return {
-			max : {
-				color: exports.MAX_COLOR,
-				value: this._bounds.max
-			},
-			min: {
-				color: exports.MIN_COLOR,
-				value: this._bounds.min
-			}
-		};
-	};
-	
-	MapModel.prototype.noDataCategory = function () {
-		return {
-			color: exports.NO_DATA_COLOR,
-			count: this._geojson.features.filter(function (feature) {
-				return !feature.properties.price;
-			}).length
-		};
+	MapModel.prototype.categories = function () {
+		return [{
+				max : {
+					color: exports.MAX_COLOR,
+					value: this._bounds.max
+				},
+				min: {
+					color: exports.MIN_COLOR,
+					value: this._bounds.min
+				}
+			}, {
+				color: exports.NO_DATA_COLOR,
+				count: this._geojson.features.filter(function (feature) {
+					return !feature.properties.price;
+				}).length
+			}];
 	};
 	
 	function boundsOf(homes) {

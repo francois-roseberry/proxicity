@@ -21,13 +21,28 @@
 			.append('ul')
 			.classed('legend-items', true);
 			
-		var boundedCategory = list.append('li')
-			.classed({
-				'legend-item': true,
-				'legend-bounded-category' : true
+		list.selectAll('.legend-item')
+			.data(model.categories())
+			.enter()
+			.append('li')
+			.classed('legend-item', true)
+			.each(function (category) {
+				var element = d3.select(this);
+				
+				if (category.max) {
+					// Bounded category
+					renderBoundedCategory(element, category);
+				} else {
+					// Normal category
+					renderCategory(element, category);
+				}
 			});
-			
-		var svg = boundedCategory.append('svg')
+    };
+	
+	function renderBoundedCategory(element, category) {
+		var svg = element
+			.classed('legend-bounded-category', true)
+			.append('svg')
 			.classed('legend-thumbnail', true)
 			.attr({
 				width: 25,
@@ -47,14 +62,14 @@
 		gradient.append('stop')
 			.attr('offset', '0%')
 			.style({
-				'stop-color': model.bounds().min.color,
+				'stop-color': category.min.color,
 				'stop-opacity': 1
 			});
 			
 		gradient.append('stop')
 			.attr('offset', '100%')
 			.style({
-				'stop-color': model.bounds().max.color,
+				'stop-color': category.max.color,
 				'stop-opacity': 1
 			});
 			
@@ -65,21 +80,18 @@
             })
             .style('fill', 'url(#grad1)');
 			
-		boundedCategory.append('span')
+		element.append('span')
             .classed('legend-bounds-upper', true)
-            .text(model.bounds().max.value);
+            .text(category.max.value);
 
-        boundedCategory.append('span')
+        element.append('span')
             .classed('legend-bounds-lower', true)
-            .text(model.bounds().min.value);
-			
-		var noDataCategory = list.append('li')
-			.classed({
-				'legend-item': true,
-				'legend-no-data-category': true
-			});
-			
-		noDataCategory
+            .text(category.min.value);
+	}
+	
+	function renderCategory(element, category) {
+		element
+			.classed('legend-no-data-category', true)
 			.append('svg')
 			.classed('legend-thumbnail', true)
 			.attr({
@@ -91,9 +103,9 @@
 				width: 25,
 				height: 25
 			})
-			.style('fill', model.noDataCategory().color);
+			.style('fill', category.color);
 			
-		noDataCategory.append('span')
-			.text(i18n.DATA_UNAVAILABLE + ' (' + model.noDataCategory().count + ')');
-    };
+		element.append('span')
+			.text(i18n.DATA_UNAVAILABLE + ' (' + category.count + ')');
+	}
 }());
