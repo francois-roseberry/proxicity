@@ -2,16 +2,17 @@
 	"use strict";
 	
 	var expect  = require('chai').expect;
-	var KijijiProvider = require('../main/kijiji-provider.js');
+	var KijijiListingProvider = require('../main/kijiji-listing-provider');
+	var KijijiDetailsProvider = require('../main/kijiji-details-provider');
 
-	describe('A Kijiji provider', function () {
-		this.timeout(30000);
+	describe('A Kijiji details provider', function () {
+		this.timeout(10000);
 		
 		var kijijiProvider;
 		var homesProduced;
 		
 		before(function (done) {
-			kijijiProvider = new KijijiProvider();
+			kijijiProvider = new KijijiDetailsProvider(singleHomeKijijiProvider());
 			kijijiProvider.getHomes().subscribe(function (homes) {
 				homesProduced = homes;
 			}, done, done);
@@ -45,5 +46,15 @@
 				});
 			});
 		});
+		
+		function singleHomeKijijiProvider() {
+			return {
+				getHomes: function () {
+					return new KijijiListingProvider().getHomes().map(function (homes) {
+						return [homes[0]];
+					});
+				}
+			};
+		}
 	});
 }());

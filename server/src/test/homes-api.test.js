@@ -3,7 +3,7 @@
 	
 	var chai = require('chai');
 	var chaiHttp = require('chai-http');
-	var homes = require('./test-data.js').homes;
+	var homes = require('./test-data').homes;
 	var Rx = require('rx');
 	var expect = chai.expect;
 	

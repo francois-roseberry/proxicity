@@ -6,7 +6,7 @@
 	var expect  = require('chai').expect;
 	var Rx = require('rx');
 	var _ = require('underscore');
-	var PriceExtractor = require('../main/price-extractor.js');
+	var PriceExtractor = require('../main/price-extractor');
 
 	describe('A price extractor', function () {
 		var FAKE_HOMES = [{

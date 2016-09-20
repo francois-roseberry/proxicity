@@ -7,57 +7,32 @@
 	
 	var BASE_URL = "http://www.kijiji.ca";
 
-	function KijijiProvider() {}
+	function KijijiDetailsProvider(provider) {
+		this._provider = provider;
+	}
 
 	/**
 	 * Get homes by scraping the appartment ads on Kijiji (since their API is now closed for new API accounts)
 	 *
 	 * Ebay has an API for getting ads. Maybe it works for Kijiji as well ?
 	 */
-	KijijiProvider.prototype.getHomes = function () {	
-		var urls = {
-			'3 1/2': '/b-appartement-condo-3-1-2/ville-de-quebec/c213l1700124',
-			'4 1/2': '/b-appartement-condo-4-1-2/ville-de-quebec/c214l1700124'
-		};
-		
-		var subject = new Rx.AsyncSubject();
-		
-		request(BASE_URL + urls['3 1/2'], function (error, response, html) {
-			if (error) {
-				subject.onError(error);
-				return;
-			}
-			
-			var $ = cheerio.load(html);
-			var observables = [];
-			$('.title a').each(function () {
-				var node = $(this);
-				var name = removeStartingJunkCharactersFrom(node.text());			
-				var url = node.attr('href');
-				
-				var observable = getHomeDetails(url).map(function (details) {
+	KijijiDetailsProvider.prototype.getHomes = function () {	
+		return this._provider.getHomes().flatMap(function (homes) {
+			// If this doesn't work, return the observable directly
+			var observables = homes.map(function (home) {
+				return getHomeDetails(home.url).map(function (details) {
 					return {
-						name: name,
-						url: url,
+						name: home.name,
+						url: home.url,
 						price: details.price,
 						address: details.address
 					};
 				});
-				observables.push(observable);
 			});
 			
-			Rx.Observable.forkJoin(observables).subscribe(function (homes) {
-				subject.onNext(homes);
-				subject.onCompleted();
-			});
+			return Rx.Observable.forkJoin(observables);
 		});
-		
-		return subject.asObservable();
 	};
-	
-	function removeStartingJunkCharactersFrom(name) {
-		return name.substring(1).trim();
-	}
 	
 	function getHomeDetails(url) {
 		var subject = new Rx.AsyncSubject();
@@ -86,5 +61,5 @@
 		return subject;
 	}
 
-	module.exports = KijijiProvider;
+	module.exports = KijijiDetailsProvider;
 }());

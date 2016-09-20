@@ -6,7 +6,8 @@
 	var program = require('commander');
 	
 	var CachedProvider = require('./cached-provider');
-	var KijijiProvider = require('./kijiji-provider');
+	var KijijiListingProvider = require('./kijiji-listing-provider');
+	var KijijiDetailsProvider = require('./kijiji-details-provider');
 	var GeocodingProvider = require('./geocoding-provider');
 	var PriceExtractor = require('./price-extractor');
 	
@@ -31,7 +32,7 @@
 			new CachedProvider(
 				new GeocodingProvider(
 					new CachedProvider(
-						new KijijiProvider(),
+						new KijijiDetailsProvider(new KijijiListingProvider()),
 						path.join(program.cache, 'kijiji-homes.json')
 					)
 				),

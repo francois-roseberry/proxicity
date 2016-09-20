@@ -4,7 +4,7 @@
 	var expect  = require('chai').expect;
 	var Rx = require('rx');
 	var _ = require('underscore');
-	var GeocodingProvider = require('../main/geocoding-provider.js');
+	var GeocodingProvider = require('../main/geocoding-provider');
 
 	describe('A geocoding provider', function () {
 		var FAKE_HOMES = [{
