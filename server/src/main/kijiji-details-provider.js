@@ -25,7 +25,8 @@
 						name: home.name,
 						url: home.url,
 						price: details.price,
-						address: details.address
+						address: details.address,
+						posted: details.posted
 					};
 				});
 			});
@@ -49,10 +50,17 @@
 				
 				var priceNode = table.find('[itemprop=price] strong');
 				
+				// TODO : extract the posted date
+				var postedNode = table.find('tr:first-child td');
+				
 				var trAdressNode = table.find('#MapLink').parent();
 				$('a', trAdressNode).remove();
 				
-				subject.onNext({address: trAdressNode.text().trim(), price: priceNode.text()});
+				subject.onNext({
+					address: trAdressNode.text().trim(),
+					price: priceNode.text(),
+					posted: postedNode.text()
+				});
 			});
 			
 			subject.onCompleted();

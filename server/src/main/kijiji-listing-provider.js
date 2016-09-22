@@ -32,7 +32,7 @@
 			var homes = [];
 			$('.title a').each(function () {
 				var node = $(this);
-				var name = removeStartingJunkCharactersFrom(node.text());			
+				var name = removeStartingJunkCharactersFrom(node.text());				
 				var url = node.attr('href');
 				
 				homes.push({

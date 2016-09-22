@@ -45,6 +45,13 @@
 					expect(home.address).to.not.equal('');
 				});
 			});
+			
+			it('have posted dates', function () {
+				homesProduced.forEach(function (home) {
+					expect(home.posted).to.be.a('string');
+					expect(home.posted).to.not.equal('');
+				});
+			});
 		});
 		
 		function singleHomeKijijiProvider() {
