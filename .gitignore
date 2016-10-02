@@ -7,3 +7,4 @@ target/
 cache/
 npm-debug.log
 **/phantomjs.log
+**/*.key
