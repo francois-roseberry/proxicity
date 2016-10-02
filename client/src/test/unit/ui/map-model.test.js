@@ -31,6 +31,7 @@
 				expect(feature.properties.name).to.eql(home.name);
 				expect(feature.properties.price).to.eql(home.price);
 				expect(feature.properties.address).to.eql(home.address);
+				expect(feature.properties.posted).to.eql(home.posted);
 			});
 		});
 		

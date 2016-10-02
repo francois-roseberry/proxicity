@@ -76,6 +76,7 @@
 					name: home.name,
 					price: home.price,
 					address: home.address,
+					posted: home.posted,
 					color: (home.price ? scale(home.price) : exports.NO_DATA_COLOR)
 				}
 			};

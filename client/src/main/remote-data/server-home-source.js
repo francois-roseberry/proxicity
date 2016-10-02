@@ -28,7 +28,8 @@
 			url: homeJson.url,
 			price: homeJson.price,
 			address: homeJson.address,
-			coords: homeJson.coords
+			coords: homeJson.coords,
+			posted: homeJson.posted
 		};
 	}
 }());
