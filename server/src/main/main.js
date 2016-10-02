@@ -9,7 +9,10 @@
 	var KijijiListingProvider = require('./kijiji-listing-provider');
 	var KijijiDetailsProvider = require('./kijiji-details-provider');
 	var GeocodingProvider = require('./geocoding-provider');
+	var GroceriesProvider = require('./groceries-provider');
 	var PriceExtractor = require('./price-extractor');
+	
+	var key = require('../../google_maps_api.key.json').key;
 	
 	program
 		.version('0.1')
@@ -28,16 +31,22 @@
 	});
 	
 	function createProvider() {
-		return new PriceExtractor(
-			new CachedProvider(
-				new GeocodingProvider(
+		return new CachedProvider(
+			new GroceriesProvider(
+				new PriceExtractor(
 					new CachedProvider(
-						new KijijiDetailsProvider(new KijijiListingProvider()),
-						path.join(program.cache, 'kijiji-homes.json')
+						new GeocodingProvider(
+							new CachedProvider(
+								new KijijiDetailsProvider(new KijijiListingProvider()),
+								path.join(program.cache, 'kijiji-homes.json')
+							)
+						),
+						path.join(program.cache, 'geocoded-homes.json')
 					)
 				),
-				path.join(program.cache, 'geocoded-homes.json')
-			)
+				key
+			),
+			path.join(program.cache, 'homes-with-groceries.json')
 		);
 	}
 }());
