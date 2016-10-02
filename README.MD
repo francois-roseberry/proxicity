@@ -3,20 +3,13 @@
 Calculator of service proximity for homes
 
 Server will be in nodejs, client will be javascript
+
 Starting development, final objective is to display homes on a map, ranked by their proximity score
 
-# Design outline
+Your google maps API key needs to be placed in a file called google_maps_api.key.json in the server/ directory with this content :
 
-HomesProvider (provides homes and their addresses)
-
-combined with
-
-LandmarksProvider (provide close landmarks, like groceries, parks or restaurants)
-
--->
-
-algorithm which calculates the distances and attributes scores
-
--->
-
-client, which will display the points on a map
+```
+{
+  key: YOUR_API_KEY
+}
+```
