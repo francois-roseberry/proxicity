@@ -5,12 +5,7 @@
 	var ProxicityServer = require('./proxicity-server');
 	var program = require('commander');
 	
-	var CachedProvider = require('./cached-provider');
-	var KijijiListingProvider = require('./kijiji-listing-provider');
-	var KijijiDetailsProvider = require('./kijiji-details-provider');
-	var GeocodingProvider = require('./geocoding-provider');
-	var GroceriesProvider = require('./groceries-provider');
-	var PriceExtractor = require('./price-extractor');
+	var ProviderChain = require('./provider-chain');
 	
 	var key = require('../../google_maps_api.key.json').key;
 	
@@ -31,22 +26,11 @@
 	});
 	
 	function createProvider() {
-		return new CachedProvider(
-			new GroceriesProvider(
-				new PriceExtractor(
-					new CachedProvider(
-						new GeocodingProvider(
-							new CachedProvider(
-								new KijijiDetailsProvider(new KijijiListingProvider()),
-								path.join(program.cache, 'kijiji-homes.json')
-							)
-						),
-						path.join(program.cache, 'geocoded-homes.json')
-					)
-				),
-				key
-			),
-			path.join(program.cache, 'homes-with-groceries.json')
-		);
+		return ProviderChain.fromKijiji()
+			.cached(path.join(program.cache, 'kijiji-homes.json'))
+			.geocoded()
+			.cached(path.join(program.cache, 'geocoded-homes.json'))
+			.priceCorrected()
+			.withGroceries(key);
 	}
 }());
