@@ -27,7 +27,7 @@
 					.replace('{1}', home.coords.lng)
 					.replace('{2}', key);
 				
-				return groceriesSubject(url, home);
+				return grocerySubject(url, home);
 			});
 			
 			Rx.Observable.forkJoin(subjects).subscribe(function (homesWithGroceries) {
@@ -39,7 +39,7 @@
 		return subject.asObservable();
 	};
 	
-	function groceriesSubject(url, home) {
+	function grocerySubject(url, home) {
 		var subject = new Rx.AsyncSubject();
 		request(url, function (error, response, body) {
 			if (error) {
