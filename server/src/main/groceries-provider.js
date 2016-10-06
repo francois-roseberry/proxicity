@@ -47,12 +47,10 @@
 			}
 			
 			var json = JSON.parse(body);
-			home.groceries = json.results.map(function (result) {
-				return {
-					name: result.name,
-					address: result.vicinity
+			home.grocery = {
+					name: json.results[0].name,
+					address: json.results[0].vicinity
 				};
-			});
 			
 			subject.onNext(home);
 			subject.onCompleted();

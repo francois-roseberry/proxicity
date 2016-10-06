@@ -7,7 +7,7 @@
 	var GroceriesProvider = require('../main/groceries-provider');
 	var key = require('../../google_maps_api.key.json').key;
 
-	describe.only('A groceries provider', function () {
+	describe('A groceries provider', function () {
 		var FAKE_HOMES = [{
 			name: 'House A', 
 			coords: {
@@ -49,16 +49,13 @@
 			});
 		});
 		
-		it('add an array of grocery objects', function () {
+		it('add a grocery object with an address and a name', function () {
 			homesProduced.forEach(function (home) {
-				expect(home).to.contain.key('groceries');
-				expect(home.groceries).to.not.have.length(0);
-				home.groceries.forEach(function (grocery) {
-					expect(grocery.name).to.be.a('string');
-					expect(grocery.name).to.not.equal('');
-					expect(grocery.address).to.be.a('string');
-					expect(grocery.address).to.not.equal('');
-				});
+				expect(home).to.contain.key('grocery');
+				expect(home.grocery.name).to.be.a('string');
+				expect(home.grocery.name).to.not.equal('');
+				expect(home.grocery.address).to.be.a('string');
+				expect(home.grocery.address).to.not.equal('');
 			});
 		});
 		

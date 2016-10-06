@@ -31,6 +31,7 @@
 			.geocoded()
 			.cached(path.join(program.cache, 'geocoded-homes.json'))
 			.priceCorrected()
-			.withGroceries(key);
+			.withGroceries(key)
+			.cached(path.join(program.cache, 'homes-with-groceries.json'));
 	}
 }());
