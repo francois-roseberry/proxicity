@@ -7,6 +7,7 @@
 	var MapModel = require('./map-model');
 	var LoadingIndicator = require('./loading-indicator');
 	var LegendWidget = require('./legend-widget');
+	var TimeFormatter = require('./time-formatter');
 
     exports.render = function (container, task) {
 		precondition(container, 'Application Widget requires a container');
@@ -51,6 +52,8 @@
 									' : ' + feature.properties.posted + '<br/><br/>' + i18n.GROCERY +
 									' :<br>&nbsp;&nbsp;&nbsp;&nbsp;' + feature.properties.grocery.name +
 									'<br>&nbsp;&nbsp;&nbsp;&nbsp;' + feature.properties.grocery.address +
+									'<br>&nbsp;&nbsp;&nbsp;&nbsp;' +
+									TimeFormatter.format(feature.properties.grocery.time) +
 									'<br><br>' + i18n.PRICE + ' : ' +
 									(feature.properties.price ?
 										feature.properties.price + ' $' : i18n.DATA_UNAVAILABLE));

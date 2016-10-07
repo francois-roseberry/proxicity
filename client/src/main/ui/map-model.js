@@ -77,10 +77,7 @@
 					price: home.price,
 					address: home.address,
 					posted: home.posted,
-					grocery: {
-						name: home.grocery.name,
-						address: home.grocery.address
-					},
+					grocery: home.grocery,
 					color: (home.price ? scale(home.price) : exports.NO_DATA_COLOR)
 				}
 			};
