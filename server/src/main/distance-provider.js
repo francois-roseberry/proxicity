@@ -46,7 +46,6 @@
 	
 	function distanceSubject(url, home, placeType) {
 		var subject = new Rx.AsyncSubject();
-		console.log(url);
 		request(url, function (error, response, body) {
 			if (error) {
 				subject.onError(error);

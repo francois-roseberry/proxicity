@@ -32,6 +32,8 @@
 				expect(feature.properties.price).to.eql(home.price);
 				expect(feature.properties.address).to.eql(home.address);
 				expect(feature.properties.posted).to.eql(home.posted);
+				expect(feature.properties.grocery.name).to.eql(home.grocery.name);
+				expect(feature.properties.grocery.address).to.eql(home.grocery.address);
 			});
 		});
 		

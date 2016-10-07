@@ -8,3 +8,4 @@ cache/
 npm-debug.log
 **/phantomjs.log
 **/*.key.json
+npp-workspace

@@ -29,7 +29,8 @@
 			price: homeJson.price,
 			address: homeJson.address,
 			coords: homeJson.coords,
-			posted: homeJson.posted
+			posted: homeJson.posted,
+			grocery: homeJson.grocery
 		};
 	}
 }());
