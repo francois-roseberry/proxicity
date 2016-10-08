@@ -1,6 +1,7 @@
 (function () {
 	"use strict";
 	
+	var fs = require('fs');
 	var path = require('path');
 	var ProxicityServer = require('./proxicity-server');
 	var program = require('commander');
@@ -18,12 +19,35 @@
 		.option('-p --port [port]', 'Port number to use. If not specified, ' +
 				'defaults to 3000')
 		.parse(process.argv);
-	
-	ProxicityServer.create({
-		port: program.port || 3000,
-		provider: createProvider(),
-		webclient: program.webclient
+		
+	fs.access(program.cache, fs.R_OK | fs.W_OK, function (err) {
+		if (err) {
+			console.log('Cache directory is inexistent or inaccessible by the application');
+			return;
+		}
+		
+		fs.stat(program.cache, function (err, stats) {
+			if (err) {
+				console.log('Cannot access cache directory, details : ' + err);
+				return;
+			}
+			
+			if (!stats.isDirectory()) {
+				console.log('Cache must be a directory');
+				return;
+			}
+			
+			startServer();
+		});
 	});
+	
+	function startServer() {
+		ProxicityServer.create({
+			port: program.port || 3000,
+			provider: createProvider(),
+			webclient: program.webclient
+		});
+	}
 	
 	function createProvider() {
 		return ProviderChain.fromKijiji()
