@@ -8,7 +8,7 @@
 		precondition(_.isNumber(seconds), 'Formatting time requires an amount of seconds');
 		
 		if (seconds >= 60) {
-			return Math.floor(seconds/60) + ' ' + i18n.TIME_FORMAT_MIN;
+			return Math.round(seconds/60) + ' ' + i18n.TIME_FORMAT_MIN;
 		}
 		
 		return seconds%60 + ' ' + i18n.TIME_FORMAT_SEC;
