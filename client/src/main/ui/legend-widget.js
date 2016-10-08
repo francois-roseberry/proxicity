@@ -12,10 +12,12 @@
 			.append('div')
 			.classed('legend-container', true);
 			
+		var description = i18n.DATA_SOURCE_DESCRIPTION.replace('{0}', model.geojson().features.length);
+			
 		legendContainer.append('div')
 			.classed('legend-header', true)
 			.append('span')
-			.text(model.geojson().features.length + ' homes');
+			.html(description);
 		
 		var list = legendContainer
 			.append('ul')
