@@ -2,26 +2,21 @@
     'use strict';
    
 	var MapModel = require('./map-model');
-	var Source = require('./fake-home-source');
+	
+	var testHomes = require('./test-homes');
 
     describe('A map model', function () {
 		var model;
-		var originalHomes;
+		var homes;
 		
-		beforeEach(function (done) {
-			var source = Source.newSource();
-			source.getHomes()
-				.subscribe(function (homes) {
-					originalHomes = homes;
-					model = MapModel.newModel(homes);
-				}, done, done);
-				
-			source.resolve();
+		beforeEach(function () {
+			homes = testHomes.homes();
+			model = MapModel.newModel(homes);
 		});
 		
 		it('creates valid geojson with points from homes', function () {
 			expect(model.geojson().type).to.eql('FeatureCollection');
-			originalHomes.forEach(function (home, index) {
+			homes.forEach(function (home, index) {
 				var feature = model.geojson().features[index];
 				expect(feature.type).to.eql('Feature');
 				expect(feature.geometry.type).to.eql('Point');

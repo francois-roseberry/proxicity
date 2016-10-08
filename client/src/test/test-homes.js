@@ -1,24 +1,7 @@
-﻿(function() {
+(function() {
 	'use strict';
-
-	exports.newSource = function() {
-		return new FakeHomeSource();
-	};
-
-	function FakeHomeSource() {
-		this._homes = new Rx.AsyncSubject();
-	}
 	
-	FakeHomeSource.prototype.resolve = function () {
-		this._homes.onNext(createHomes());
-		this._homes.onCompleted();
-	};
-	
-	FakeHomeSource.prototype.getHomes = function () {
-		return this._homes.asObservable();
-	};
-	
-	function createHomes() {
+	exports.homes = function () {
 		return [{
 				name: "Appart A",
 				url: "/appartments/a",
@@ -79,5 +62,5 @@
 					time: 250
 				}
 		}];
-	}
+	};
 }());
