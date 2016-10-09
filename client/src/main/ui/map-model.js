@@ -2,6 +2,7 @@
     'use strict';
    
 	var precondition = require('./contract').precondition;
+	var i18n = require('./i18n').i18n();
 	
 	exports.MAX_COLOR = '#ff0000';
 	exports.MIN_COLOR = '#0000ff';
@@ -20,6 +21,13 @@
 	
 	MapModel.prototype.geojson = function () {
 		return this._geojson;
+	};
+	
+	MapModel.prototype.criteria = function () {
+		return [{
+			id: 'price',
+			name: i18n.CRITERIA_PRICE
+		}];
 	};
 	
 	MapModel.prototype.categories = function () {

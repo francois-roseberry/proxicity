@@ -29,10 +29,10 @@
 			.append('select')
 			.classed('criteria-selector', true);
 		
-		_.each(getCriteria(), function (criterion) {
+		_.each(model.criteria(), function (criterion) {
 			criteriaSelector.append('option')
 				.attr('value', criterion.id)
-				.text(criterion.text);
+				.text(criterion.name);
 		});
 		
 		var list = legendContainer
@@ -125,12 +125,5 @@
 			
 		element.append('span')
 			.text(i18n.DATA_UNAVAILABLE + ' (' + category.count + ')');
-	}
-	
-	function getCriteria() {
-		return [{
-			id: 'price',
-			text: i18n.CRITERIA_PRICE
-		}];
 	}
 }());

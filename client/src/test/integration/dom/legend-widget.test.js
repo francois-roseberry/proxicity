@@ -35,8 +35,8 @@
 			domContext.assertOneOf('.legend-criteria .criteria-selector');
 		});
 		
-		it('puts only one criteria in the criteria selector', function () {
-			domContext.assertOneOf('.criteria-selector option');
+		it('puts one option for each criteria in the criteria selector', function () {
+			domContext.assertElementCount('.criteria-selector option', model.criteria().length);
 		});
 		
 		it('renders a list of items', function () {
