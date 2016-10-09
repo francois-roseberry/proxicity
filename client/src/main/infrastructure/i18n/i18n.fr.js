@@ -15,4 +15,5 @@
 	exports.CRITERIA_TYPE_COLOR = 'Couleur';
 	
 	exports.CRITERIA_PRICE = 'Prix';
+	exports.CRITERIA_GROCERY_TIME = "Temps jusqu'à l'épicerie la plus près";
 }());

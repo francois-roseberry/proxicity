@@ -9,14 +9,17 @@
     describe('A map model', function () {
 		var model;
 		var geojson;
+		var geojsonCount;
 		var homes;
 		
-		beforeEach(function (done) {
+		beforeEach(function () {
+			geojsonCount = 0;
 			homes = testHomes.homes();
 			model = MapModel.newModel(homes);
 			model.geojson().subscribe(function (json) {
 				geojson = json;
-			}, done, done);
+				geojsonCount++;
+			});
 		});
 		
 		it('creates valid geojson with points from homes', function () {
@@ -54,10 +57,24 @@
 			expect(geojson.features[3].properties.color).to.eql(MapModel.NO_DATA_COLOR);
 		});
 		
-		it('has a price criteria', function () {
-			expect(model.criteria().length).to.eql(1);
+		it('has a price and a grocery distance criteria', function () {
+			expect(model.criteria().length).to.eql(2);
+			
 			expect(model.criteria()[0].id).to.eql('price');
 			expect(model.criteria()[0].name).to.eql(i18n.CRITERIA_PRICE);
+			
+			expect(model.criteria()[1].id).to.eql('grocery-time');
+			expect(model.criteria()[1].name).to.eql(i18n.CRITERIA_GROCERY_TIME);
+		});
+		
+		describe('when changing active criteria', function () {
+			beforeEach(function () {
+				model.changeActiveCriteria('price');
+			});
+			
+			it('fires a geojson event', function () {
+				expect(geojsonCount).to.eql(2);
+			});
 		});
 	});
 }());

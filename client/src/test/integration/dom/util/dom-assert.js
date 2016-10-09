@@ -43,6 +43,14 @@
 
                 element.click();
             },
+			
+			selectOption: function (selector, optionValue) {
+				checkIsSelector(selector);
+				
+				var element = rootElement().find(selector);
+				element.val(optionValue);
+				element.change();
+			},
 
             d3: d3Actions(),
 

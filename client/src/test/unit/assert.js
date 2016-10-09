@@ -30,4 +30,18 @@
 			throw new Error('Some observable did not complete when the task stopped');
 		}
 	};
+	
+	exports.eventFiredAfter = function (fn, event, callback, count) {
+        var events = [];
+        event.subscribe(function (event) {
+            events.push(event);
+        });
+
+        fn();
+
+        expect(events.length).to.be(count || 1);
+        if (callback) {
+            _.each(events, callback);
+        }
+    };
 }());

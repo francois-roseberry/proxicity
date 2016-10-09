@@ -31,6 +31,10 @@
 		var criteriaSelector = criteriaContainer
 			.append('select')
 			.classed('criteria-selector', true);
+			
+		$(criteriaSelector[0]).change(function () {
+			model.changeActiveCriteria(this.value);
+		});
 		
 		_.each(model.criteria(), function (criterion) {
 			criteriaSelector.append('option')
@@ -43,6 +47,8 @@
 			.classed('legend-items', true);
 		
 		model.categories().subscribe(function (categories) {
+			list.selectAll('*').remove();
+			
 			list.selectAll('.legend-item')
 				.data(categories)
 				.enter()

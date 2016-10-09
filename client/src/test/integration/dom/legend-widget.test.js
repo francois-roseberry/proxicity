@@ -4,6 +4,7 @@
 	var MapModel = require('./map-model');
 	var LegendWidget = require('./legend-widget');
 	
+	var assert = require('./assert');
 	var describeInDom = require('./dom-fixture').describeInDom;
 	var testHomes = require('./test-homes');
 
@@ -11,13 +12,13 @@
 		var model;
 		var categories;
 		
-		beforeEach(function (done) {
+		beforeEach(function () {
 			model = MapModel.newModel(testHomes.homes());
 			LegendWidget.render(domContext.rootElement, model);
 			
 			model.categories().subscribe(function (cats) {
 				categories = cats;
-			}, done, done);
+			});
 		});
 		
 		it('is rendered in the given container', function () {
@@ -36,6 +37,12 @@
 		
 		it('puts one option for each criteria in the criteria selector', function () {
 			domContext.assertElementCount('.criteria-selector option', model.criteria().length);
+		});
+		
+		it('selecting a criteria fires a geojson event in the model', function () {			
+			assert.eventFiredAfter(function() {
+				domContext.selectOption('.criteria-selector', model.criteria()[1].id);
+			}, model.geojson().skip(1));
 		});
 		
 		it('renders a list of items', function () {
