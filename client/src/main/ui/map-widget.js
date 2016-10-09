@@ -18,30 +18,32 @@
 		var map = new L.map('proxicity-map', defaultOptions());
 		L.tileLayer("http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png").addTo(map);
 
-		L.geoJson(model.geojson(), {
-			pointToLayer: function (feature, latlng) {
-				return L.circleMarker(latlng, {
-					radius: 6,
-					stroke: false,
-					fillOpacity: 1,
-					fillColor: feature.properties.color
-				});
-			},
-			onEachFeature: function (feature, layer) {
-				layer.bindPopup(
-					feature.properties.name + '<br><br>' + i18n.DATE_POSTED	+
-					' : ' + feature.properties.posted + '<br/><br/>' + i18n.GROCERY +
-					' :<br>&nbsp;&nbsp;&nbsp;&nbsp;' + feature.properties.grocery.name +
-					'<br>&nbsp;&nbsp;&nbsp;&nbsp;' + feature.properties.grocery.address +
-					'<br>&nbsp;&nbsp;&nbsp;&nbsp;' +
-					TimeFormatter.format(feature.properties.grocery.time) +
-					'<br><br>' + i18n.PRICE + ' : ' +
-					(feature.properties.price ?
-						feature.properties.price + ' $' : i18n.DATA_UNAVAILABLE));
-			}
-		}).addTo(map);
-		
-		map.fitBounds(boundsOf(model.geojson()));					
+		model.geojson().subscribe(function (geojson) {
+			L.geoJson(geojson, {
+				pointToLayer: function (feature, latlng) {
+					return L.circleMarker(latlng, {
+						radius: 6,
+						stroke: false,
+						fillOpacity: 1,
+						fillColor: feature.properties.color
+					});
+				},
+				onEachFeature: function (feature, layer) {
+					layer.bindPopup(
+						feature.properties.name + '<br><br>' + i18n.DATE_POSTED	+
+						' : ' + feature.properties.posted + '<br/><br/>' + i18n.GROCERY +
+						' :<br>&nbsp;&nbsp;&nbsp;&nbsp;' + feature.properties.grocery.name +
+						'<br>&nbsp;&nbsp;&nbsp;&nbsp;' + feature.properties.grocery.address +
+						'<br>&nbsp;&nbsp;&nbsp;&nbsp;' +
+						TimeFormatter.format(feature.properties.grocery.time) +
+						'<br><br>' + i18n.PRICE + ' : ' +
+						(feature.properties.price ?
+							feature.properties.price + ' $' : i18n.DATA_UNAVAILABLE));
+				}
+			}).addTo(map);
+			
+			map.fitBounds(boundsOf(geojson));	
+		});			
     };
 	
 	function boundsOf(geojson) {

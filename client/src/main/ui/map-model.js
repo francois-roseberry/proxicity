@@ -20,7 +20,7 @@
 	}
 	
 	MapModel.prototype.geojson = function () {
-		return this._geojson;
+		return this._geojson.asObservable();
 	};
 	
 	MapModel.prototype.criteria = function () {
@@ -31,22 +31,28 @@
 	};
 	
 	MapModel.prototype.categories = function () {
-		return [{
-				max : {
-					color: exports.MAX_COLOR,
-					value: this._bounds.max
-				},
-				min: {
-					color: exports.MIN_COLOR,
-					value: this._bounds.min
-				}
-			}, {
-				color: exports.NO_DATA_COLOR,
-				count: this._geojson.features.filter(function (feature) {
-					return !feature.properties.price;
-				}).length
-			}];
+		return this._geojson.map(toCategories(this._bounds)).asObservable();
 	};
+	
+	function toCategories(bounds) {
+		return function (geojson) {
+			return [{
+					max : {
+						color: exports.MAX_COLOR,
+						value: bounds.max
+					},
+					min: {
+						color: exports.MIN_COLOR,
+						value: bounds.min
+					}
+				}, {
+					color: exports.NO_DATA_COLOR,
+					count: geojson.features.filter(function (feature) {
+						return !feature.properties.price;
+					}).length
+				}];
+		};
+	}
 	
 	function boundsOf(homes) {
 		var data = homes.filter(function (home) {
@@ -66,10 +72,10 @@
             .domain([bounds.min, bounds.max])
             .range([exports.MIN_COLOR, exports.MAX_COLOR]);
 			
-		return {
+		return Rx.Observable.of({
 			type: 'FeatureCollection',
 			features: homes.map(toFeature(scale))
-		};
+		});
 	}
 	
 	function toFeature(scale) {

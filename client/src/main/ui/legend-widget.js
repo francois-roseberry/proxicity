@@ -12,12 +12,15 @@
 			.append('div')
 			.classed('legend-container', true);
 			
-		var description = i18n.DATA_SOURCE_DESCRIPTION.replace('{0}', model.geojson().features.length);
-			
-		legendContainer.append('div')
+		var header = legendContainer.append('div')
 			.classed('legend-header', true)
-			.append('span')
-			.html(description);
+			.append('span');
+			
+		model.geojson().subscribe(function (geojson) {
+			var description = i18n.DATA_SOURCE_DESCRIPTION.replace('{0}', geojson.features.length);
+			
+			header.html(description);
+		});
 			
 		var criteriaContainer = legendContainer.append('div')
 			.classed('legend-criteria', true);
@@ -38,23 +41,25 @@
 		var list = legendContainer
 			.append('ul')
 			.classed('legend-items', true);
-			
-		list.selectAll('.legend-item')
-			.data(model.categories())
-			.enter()
-			.append('li')
-			.classed('legend-item', true)
-			.each(function (category) {
-				var element = d3.select(this);
-				
-				if (category.max) {
-					// Bounded category
-					renderBoundedCategory(element, category);
-				} else {
-					// Normal category
-					renderCategory(element, category);
-				}
-			});
+		
+		model.categories().subscribe(function (categories) {
+			list.selectAll('.legend-item')
+				.data(categories)
+				.enter()
+				.append('li')
+				.classed('legend-item', true)
+				.each(function (category) {
+					var element = d3.select(this);
+					
+					if (category.max) {
+						// Bounded category
+						renderBoundedCategory(element, category);
+					} else {
+						// Normal category
+						renderCategory(element, category);
+					}
+				});
+		});
     };
 	
 	function renderBoundedCategory(element, category) {

@@ -8,17 +8,21 @@
 
     describe('A map model', function () {
 		var model;
+		var geojson;
 		var homes;
 		
-		beforeEach(function () {
+		beforeEach(function (done) {
 			homes = testHomes.homes();
 			model = MapModel.newModel(homes);
+			model.geojson().subscribe(function (json) {
+				geojson = json;
+			}, done, done);
 		});
 		
 		it('creates valid geojson with points from homes', function () {
-			expect(model.geojson().type).to.eql('FeatureCollection');
+			expect(geojson.type).to.eql('FeatureCollection');
 			homes.forEach(function (home, index) {
-				var feature = model.geojson().features[index];
+				var feature = geojson.features[index];
 				expect(feature.type).to.eql('Feature');
 				expect(feature.geometry.type).to.eql('Point');
 				expect(feature.geometry.coordinates).to.eql([
@@ -35,19 +39,19 @@
 		});
 		
 		it('give the min color to the features corresponding to homes with the minimum price', function () {
-			expect(model.geojson().features[0].properties.color).to.eql(MapModel.MIN_COLOR);
+			expect(geojson.features[0].properties.color).to.eql(MapModel.MIN_COLOR);
 		});
 		
 		it('give the max color to the features corresponding to homes with the maximum price', function () {
-			expect(model.geojson().features[1].properties.color).to.eql(MapModel.MAX_COLOR);
+			expect(geojson.features[1].properties.color).to.eql(MapModel.MAX_COLOR);
 		});
 		
 		it('give an intermediate color to the features corresponding to homes with prices between', function () {
-			expect(model.geojson().features[2].properties.color).to.eql('#800080');
+			expect(geojson.features[2].properties.color).to.eql('#800080');
 		});
 		
 		it('give the no-data color to the features corresponding to homes with no prices', function () {
-			expect(model.geojson().features[3].properties.color).to.eql(MapModel.NO_DATA_COLOR);
+			expect(geojson.features[3].properties.color).to.eql(MapModel.NO_DATA_COLOR);
 		});
 		
 		it('has a price criteria', function () {

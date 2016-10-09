@@ -2,23 +2,22 @@
     'use strict';
    
 	var MapModel = require('./map-model');
-	var Source = require('./fake-home-source');
 	var LegendWidget = require('./legend-widget');
 	
 	var describeInDom = require('./dom-fixture').describeInDom;
+	var testHomes = require('./test-homes');
 
     describeInDom('A legend widget', function (domContext) {
 		var model;
+		var categories;
 		
 		beforeEach(function (done) {
-			var source = Source.newSource();
-			source.getHomes()
-				.subscribe(function (homes) {
-					model = MapModel.newModel(homes);
-					LegendWidget.render(domContext.rootElement, model);
-				}, done, done);
-				
-			source.resolve();
+			model = MapModel.newModel(testHomes.homes());
+			LegendWidget.render(domContext.rootElement, model);
+			
+			model.categories().subscribe(function (cats) {
+				categories = cats;
+			}, done, done);
 		});
 		
 		it('is rendered in the given container', function () {
@@ -44,7 +43,7 @@
 		});
 		
 		it('renders an item in the list for each category', function () {
-			domContext.assertElementCount('.legend-item', model.categories().length);
+			domContext.assertElementCount('.legend-item', categories.length);
 		});
 		
 		it('renders a no-data category with a thumbnail', function () {
