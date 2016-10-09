@@ -18,6 +18,11 @@
 			.classed('legend-header', true)
 			.append('span')
 			.html(description);
+			
+		legendContainer.append('div')
+			.classed('legend-criteria', true)
+			.append('span')
+			.text(i18n.CRITERIA_TYPE_COLOR + ' : ' + i18n.CRITERIA_PRICE);
 		
 		var list = legendContainer
 			.append('ul')

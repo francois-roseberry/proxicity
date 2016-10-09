@@ -29,6 +29,11 @@
 			domContext.assertOneOf('.legend-header');
 		});
 		
+		it('renders a criteria region with a span in it', function () {
+			domContext.assertOneOf('.legend-criteria');
+			domContext.assertOneOf('.legend-criteria span');
+		});
+		
 		it('renders a list of items', function () {
 			domContext.assertOneOf('.legend-items');
 		});

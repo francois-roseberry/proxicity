@@ -11,4 +11,8 @@
 	exports.TIME_FORMAT_SEC = 'sec';
 	
 	exports.DATA_SOURCE_DESCRIPTION = '{0} appartements<br>Extraits de Kijiji';
+	
+	exports.CRITERIA_TYPE_COLOR = 'Couleur';
+	
+	exports.CRITERIA_PRICE = 'Prix';
 }());
