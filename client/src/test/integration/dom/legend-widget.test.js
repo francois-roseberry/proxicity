@@ -29,9 +29,14 @@
 			domContext.assertOneOf('.legend-header');
 		});
 		
-		it('renders a criteria region with a span in it', function () {
+		it('renders a criteria region with a span and a criteria selector in it', function () {
 			domContext.assertOneOf('.legend-criteria');
 			domContext.assertOneOf('.legend-criteria span');
+			domContext.assertOneOf('.legend-criteria .criteria-selector');
+		});
+		
+		it('puts only one criteria in the criteria selector', function () {
+			domContext.assertOneOf('.criteria-selector option');
 		});
 		
 		it('renders a list of items', function () {

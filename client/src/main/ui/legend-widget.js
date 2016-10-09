@@ -19,10 +19,21 @@
 			.append('span')
 			.html(description);
 			
-		legendContainer.append('div')
-			.classed('legend-criteria', true)
-			.append('span')
-			.text(i18n.CRITERIA_TYPE_COLOR + ' : ' + i18n.CRITERIA_PRICE);
+		var criteriaContainer = legendContainer.append('div')
+			.classed('legend-criteria', true);
+			
+		criteriaContainer.append('span')
+			.text(i18n.CRITERIA_TYPE_COLOR + ' : ');
+			
+		var criteriaSelector = criteriaContainer
+			.append('select')
+			.classed('criteria-selector', true);
+		
+		_.each(getCriteria(), function (criterion) {
+			criteriaSelector.append('option')
+				.attr('value', criterion.id)
+				.text(criterion.text);
+		});
 		
 		var list = legendContainer
 			.append('ul')
@@ -114,5 +125,12 @@
 			
 		element.append('span')
 			.text(i18n.DATA_UNAVAILABLE + ' (' + category.count + ')');
+	}
+	
+	function getCriteria() {
+		return [{
+			id: 'price',
+			text: i18n.CRITERIA_PRICE
+		}];
 	}
 }());
