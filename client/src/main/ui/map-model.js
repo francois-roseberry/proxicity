@@ -3,6 +3,7 @@
    
 	var precondition = require('./contract').precondition;
 	var i18n = require('./i18n').i18n();
+	var TimeFormatter = require('./time-formatter');
 	
 	exports.MAX_COLOR = '#ff0000';
 	exports.MIN_COLOR = '#0000ff';
@@ -26,15 +27,29 @@
 	MapModel.prototype.criteria = function () {
 		return [{
 			id: 'price',
-			name: i18n.CRITERIA_PRICE
+			name: i18n.CRITERIA_PRICE,
+			format: function (value) {
+				return value + ' $';
+			},
+			noDataCountFor: function (geojson) {
+				return geojson.features.filter(function (feature) {
+						return !feature.properties.price;
+					}).length;
+			}
 		}, {
 			id: 'grocery-time',
-			name: i18n.CRITERIA_GROCERY_TIME
+			name: i18n.CRITERIA_GROCERY_TIME,
+			format: function (value) {
+				return TimeFormatter.format(value);
+			},
+			noDataCountFor: function () {
+				return 0;
+			}
 		}];
 	};
 	
 	MapModel.prototype.categories = function () {
-		return this._geojson.map(toCategories).asObservable();
+		return this._geojson.map(toCategories(this.criteria())).asObservable();
 	};
 	
 	MapModel.prototype.changeActiveCriteria = function (criterion) {
@@ -49,22 +64,26 @@
 		});
 	}
 	
-	function toCategories(geojson) {
-		return [{
-				max : {
-					color: exports.MAX_COLOR,
-					value: geojson.properties.bounds.max
-				},
-				min: {
-					color: exports.MIN_COLOR,
-					value: geojson.properties.bounds.min
-				}
-			}, {
-				color: exports.NO_DATA_COLOR,
-				count: geojson.features.filter(function (feature) {
-					return !feature.properties.price;
-				}).length
-			}];
+	function toCategories(criteria) {
+		return function (geojson) {
+			var criterion = _.find(criteria, function (criterion) {
+				return criterion.id === geojson.properties.criterion;
+			});
+			
+			return [{
+					max : {
+						color: exports.MAX_COLOR,
+						value: criterion.format(geojson.properties.bounds.max)
+					},
+					min: {
+						color: exports.MIN_COLOR,
+						value: criterion.format(geojson.properties.bounds.min)
+					}
+				}, {
+					color: exports.NO_DATA_COLOR,
+					count: criterion.noDataCountFor(geojson)
+				}];
+		};
 	}
 	
 	function boundsOf(homes, criterion) {
@@ -100,6 +119,7 @@
 			type: 'FeatureCollection',
 			features: homes.map(toFeature(scale, criterion)),
 			properties: {
+				criterion: criterion,
 				bounds: bounds
 			}
 		};
