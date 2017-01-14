@@ -6,6 +6,7 @@ target/
 # Other stuff
 cache/
 npm-debug.log
+.project
 **/phantomjs.log
 **/*.key.json
 npp-workspace
