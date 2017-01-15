@@ -29,6 +29,10 @@
 			domContext.assertOneOf('.legend-header');
 		});
 		
+		it('renders a footer region', function () {
+			domContext.assertOneOf('.legend-footer');
+		});
+		
 		it('renders a criteria region with a span and a criteria selector in it', function () {
 			domContext.assertOneOf('.legend-criteria');
 			domContext.assertOneOf('.legend-criteria span');

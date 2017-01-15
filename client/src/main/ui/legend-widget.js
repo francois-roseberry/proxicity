@@ -15,6 +15,10 @@
 		var header = legendContainer.append('div')
 			.classed('legend-header', true)
 			.append('span');
+		
+		legendContainer.append('img')
+			.attr('src', '/images/powered_by_google_on_white.png')
+			.classed('legend-footer', true);
 			
 		model.geojson().subscribe(function (geojson) {
 			var description = i18n.DATA_SOURCE_DESCRIPTION.replace('{0}', geojson.features.length);
