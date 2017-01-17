@@ -6,14 +6,14 @@
 	
 	var assert = require('./assert');
 	var describeInDom = require('./dom-fixture').describeInDom;
-	var testHomes = require('./test-homes');
+	var testDataset = require('./test-dataset');
 
     describeInDom('A legend widget', function (domContext) {
 		var model;
 		var categories;
 		
 		beforeEach(function () {
-			model = MapModel.newModel(testHomes.homes());
+			model = MapModel.newModel(testDataset.dataset());
 			LegendWidget.render(domContext.rootElement, model);
 			
 			model.categories().subscribe(function (cats) {

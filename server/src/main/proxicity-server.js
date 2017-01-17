@@ -16,10 +16,13 @@
 			'Proxicity server requires a webclient directory');
 		
 		app.use(express.static(config.webclient));
-	
-		app.get('/homes', function (request, response) {
+		
+		app.get('/dataset', function (request, response) {
 			config.provider.getHomes().subscribe(function (homes) {
-				response.json(homes);
+				var dataset = {
+					data: homes
+				};
+				response.json(dataset);
 			}, function (error) {
 				response.status(500).json({message: error.message});
 			}, _.noop);

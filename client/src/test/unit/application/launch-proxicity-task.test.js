@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	
-	var FakeSource = require('./fake-home-source');
+	var FakeSource = require('./fake-dataset-source');
 	var LaunchProxicityTask = require('./launch-proxicity-task');
 
 	describe('The LaunchProxicityTask', function () {

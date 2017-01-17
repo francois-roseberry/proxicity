@@ -2,7 +2,7 @@
 	"use strict";
 	
 	var ApplicationTask = require('./launch-proxicity-task');
-	var Source = require('./server-home-source');
+	var Source = require('./server-dataset-source');
 	var ApplicationWidget = require('./app-widget');
 	
 	var failFast = require('./fail-fast');
@@ -15,7 +15,7 @@
 	function startApplication() {
 		var container = $('.app-container');
 
-		var task = ApplicationTask.start(Source.newSource('/homes'));
+		var task = ApplicationTask.start(Source.newSource('/dataset'));
 		ApplicationWidget.render(container, task);
 	}
 }());

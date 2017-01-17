@@ -13,9 +13,9 @@
 		this._status = new Rx.BehaviorSubject(LOADING_STATUS);
 		var status = this._status;
 			
-		source.getHomes()
-			.subscribe(function (homes) {
-				status.onNext(readyStatus(homes));
+		source.getDataset()
+			.subscribe(function (dataset) {
+				status.onNext(readyStatus(dataset));
 			});
 	}
 	
@@ -30,11 +30,11 @@
 		}
 	};
 	
-	function readyStatus(homes) {
+	function readyStatus(dataset) {
 		return {
 			statusName: 'ready',
 			match: function (visitor) {
-				visitor.ready(homes);
+				visitor.ready(dataset);
 			}
 		};
 	}

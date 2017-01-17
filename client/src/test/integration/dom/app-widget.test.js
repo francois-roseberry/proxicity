@@ -2,7 +2,7 @@
     "use strict";
 
 	var ApplicationTask = require('./launch-proxicity-task');
-	var Source = require('./fake-home-source');
+	var Source = require('./fake-dataset-source');
     var Widget = require('./app-widget');
 
     var describeInDom = require('./dom-fixture').describeInDom;

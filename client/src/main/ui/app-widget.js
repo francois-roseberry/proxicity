@@ -23,8 +23,8 @@
 					loading: function () {
 						LoadingIndicator.render(widgetContainer, i18n.LOADING);
 					},
-					ready: function (homes) {
-						var model = MapModel.newModel(homes);
+					ready: function (dataset) {
+						var model = MapModel.newModel(dataset);
 						widgetContainer.selectAll('*').remove();
 						
 						LegendWidget.render($(widgetContainer[0]), model);

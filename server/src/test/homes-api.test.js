@@ -11,7 +11,7 @@
 	
 	chai.use(chaiHttp);
 
-	describe('Homes API', function () {
+	describe.only('Homes API', function () {
 		var ERROR_MESSAGE = 'BOOM !';
 		var provider;
 		var server;
@@ -26,7 +26,7 @@
 			});
 		});
 		
-		describe('when inner provider return homes', function () {
+		describe('when dataset is requested', function () {
 			var response;
 			var body;
 			
@@ -34,7 +34,7 @@
 				provider.throwErrorOnNextRequest(false);
 				
 				chai.request(server)
-					.get('/homes')
+					.get('/dataset')
 					.end(function (err, res) {
 						response = res;
 						body = res.body;
@@ -50,21 +50,25 @@
 				expect(response.headers['content-type']).to.equal('application/json; charset=utf-8');
 			});
 			
+			it('contains a data array with all homes', function () {
+				expect(response.body.data.length).to.equal(homes().length);
+			});
+			
 			it('contains all home names', function () {
-				homes().homes.forEach(function (home, index) {
-					expect(response.body.homes[index].name).to.equal(home.name);
+				homes().forEach(function (home, index) {
+					expect(response.body.data[index].name).to.equal(home.name);
 				});
 			});
 			
 			it('contains all home adresses', function () {
-				homes().homes.forEach(function (home, index) {
-					expect(response.body.homes[index].address).to.equal(home.address);
+				homes().forEach(function (home, index) {
+					expect(response.body.data[index].address).to.equal(home.address);
 				});
 			});
 			
 			it('contains all home coordinates', function () {
-				homes().homes.forEach(function (home, index) {
-					expect(response.body.homes[index].coordinates).to.deep.equal(home.coordinates);
+				homes().forEach(function (home, index) {
+					expect(response.body.data[index].coordinates).to.deep.equal(home.coordinates);
 				});
 			});
 		});
@@ -76,7 +80,7 @@
 				provider.throwErrorOnNextRequest(true);
 				
 				chai.request(server)
-					.get('/homes')
+					.get('/dataset')
 					.end(function (err, res) {
 						errorResponse = res;
 						done();

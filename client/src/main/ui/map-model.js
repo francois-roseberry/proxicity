@@ -9,10 +9,10 @@
 	exports.MIN_COLOR = '#0000ff';
 	exports.NO_DATA_COLOR = '#333333';
 
-    exports.newModel = function (homes) {
-		precondition(_.isArray(homes), 'Map Model requires an array of homes');
+    exports.newModel = function (dataset) {
+		precondition(dataset && _.isArray(dataset.data), 'Map Model requires an array of homes');
 		
-		return new MapModel(homes);
+		return new MapModel(dataset.data);
     };
 	
 	function MapModel(homes) {

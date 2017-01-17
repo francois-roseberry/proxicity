@@ -3,19 +3,19 @@
    
 	var MapModel = require('./map-model');
 	
-	var testHomes = require('./test-homes');
+	var testDataset = require('./test-dataset');
 	var i18n = require('./i18n').i18n();
 
     describe('A map model', function () {
 		var model;
 		var geojson;
 		var geojsonCount;
-		var homes;
+		var dataset;
 		
 		beforeEach(function () {
 			geojsonCount = 0;
-			homes = testHomes.homes();
-			model = MapModel.newModel(homes);
+			dataset = testDataset.dataset();
+			model = MapModel.newModel(dataset);
 			model.geojson().subscribe(function (json) {
 				geojson = json;
 				geojsonCount++;
@@ -24,7 +24,7 @@
 		
 		it('creates valid geojson with points from homes', function () {
 			expect(geojson.type).to.eql('FeatureCollection');
-			homes.forEach(function (home, index) {
+			dataset.data.forEach(function (home, index) {
 				var feature = geojson.features[index];
 				expect(feature.type).to.eql('Feature');
 				expect(feature.geometry.type).to.eql('Point');
