@@ -33,19 +33,19 @@
 			domContext.assertOneOf('.legend-footer');
 		});
 		
-		it('renders a criteria region with a span and a criteria selector in it', function () {
+		it('renders an attribute region with a span and a attribute selector in it', function () {
 			domContext.assertOneOf('.legend-criteria');
 			domContext.assertOneOf('.legend-criteria span');
 			domContext.assertOneOf('.legend-criteria .criteria-selector');
 		});
 		
-		it('puts one option for each criteria in the criteria selector', function () {
-			domContext.assertElementCount('.criteria-selector option', model.criteria().length);
+		it('puts one option for each attribute in the attribute selector', function () {
+			domContext.assertElementCount('.criteria-selector option', model.attributes().length);
 		});
 		
-		it('selecting a criteria fires a geojson event in the model', function () {			
+		it('selecting an attribute fires a geojson event in the model', function () {			
 			assert.eventFiredAfter(function() {
-				domContext.selectOption('.criteria-selector', model.criteria()[1].id);
+				domContext.selectOption('.criteria-selector', model.attributes()[1].id);
 			}, model.geojson().skip(1));
 		});
 		

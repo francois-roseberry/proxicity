@@ -57,19 +57,19 @@
 			expect(geojson.features[3].properties.color).to.eql(MapModel.NO_DATA_COLOR);
 		});
 		
-		it('has a price and a grocery distance criteria', function () {
-			expect(model.criteria().length).to.eql(2);
+		it('has a price and a grocery time attribute', function () {
+			expect(model.attributes().length).to.eql(2);
 			
-			expect(model.criteria()[0].id).to.eql('price');
-			expect(model.criteria()[0].name).to.eql(i18n.CRITERIA_PRICE);
+			expect(model.attributes()[0].id).to.eql('price');
+			expect(model.attributes()[0].name).to.eql(i18n.CRITERIA_PRICE);
 			
-			expect(model.criteria()[1].id).to.eql('grocery-time');
-			expect(model.criteria()[1].name).to.eql(i18n.CRITERIA_GROCERY_TIME);
+			expect(model.attributes()[1].id).to.eql('grocery-time');
+			expect(model.attributes()[1].name).to.eql(i18n.CRITERIA_GROCERY_TIME);
 		});
 		
-		describe('when changing active criteria', function () {
+		describe('when changing active attribute', function () {
 			beforeEach(function () {
-				model.changeActiveCriteria('price');
+				model.changeActiveAttribute('price');
 			});
 			
 			it('fires a geojson event', function () {

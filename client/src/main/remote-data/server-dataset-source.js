@@ -2,7 +2,7 @@
 	'use strict';
 	
 	var RestClient = require('./rest-client');
-	
+	var Attribute = require('./attribute');
 	var precondition = require('./contract').precondition;
 
 	exports.newSource = function (url) {
@@ -18,7 +18,18 @@
 	ServerDatasetSource.prototype.getDataset = function () {
 		return RestClient.get(this._url)
 			.map(function (dataset) {
-				return dataset;
+				return {
+					attributes: toAttributes(dataset.attributes),
+					data: dataset.data
+				};
 			});
 	};
+	
+	function toAttributes(attributesJson) {
+		return _.map(attributesJson, function (attributeJson) {
+			
+			// TODO : handle the parsing errors
+			return Attribute[attributeJson.type](attributeJson.id, attributeJson.name);
+		});
+	}
 }());

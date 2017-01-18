@@ -26,24 +26,24 @@
 			header.html(description);
 		});
 			
-		var criteriaContainer = legendContainer.append('div')
+		var attributeContainer = legendContainer.append('div')
 			.classed('legend-criteria', true);
 			
-		criteriaContainer.append('span')
+		attributeContainer.append('span')
 			.text(i18n.CRITERIA_TYPE_COLOR + ' : ');
 			
-		var criteriaSelector = criteriaContainer
+		var attributeSelector = attributeContainer
 			.append('select')
 			.classed('criteria-selector', true);
 			
-		$(criteriaSelector[0]).change(function () {
-			model.changeActiveCriteria(this.value);
+		$(attributeSelector[0]).change(function () {
+			model.changeActiveAttribute(this.value);
 		});
 		
-		_.each(model.criteria(), function (criterion) {
-			criteriaSelector.append('option')
-				.attr('value', criterion.id)
-				.text(criterion.name);
+		_.each(model.attributes(), function (attribute) {
+			attributeSelector.append('option')
+				.attr('value', attribute.id)
+				.text(attribute.name);
 		});
 		
 		var list = legendContainer

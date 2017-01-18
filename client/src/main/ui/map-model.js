@@ -24,7 +24,7 @@
 		return this._geojson.asObservable();
 	};
 	
-	MapModel.prototype.criteria = function () {
+	MapModel.prototype.attributes = function () {
 		return [{
 			id: 'price',
 			name: i18n.CRITERIA_PRICE,
@@ -49,45 +49,46 @@
 	};
 	
 	MapModel.prototype.categories = function () {
-		return this._geojson.map(toCategories(this.criteria())).asObservable();
+		return this._geojson.map(toCategories(this.attributes())).asObservable();
 	};
 	
-	MapModel.prototype.changeActiveCriteria = function (criterion) {
-		precondition(isValidCriterion(this.criteria(), criterion), 'Can only change active criteria to a valid one');
+	MapModel.prototype.changeActiveAttribute = function (attribute) {
+		precondition(isValidAttributeId(this.attributes(), attribute),
+			'Can only change active attribute to a valid one');
 		
-		this._geojson.onNext(geojsonFrom(this._homes, criterion));
+		this._geojson.onNext(geojsonFrom(this._homes, attribute));
 	};
 	
-	function isValidCriterion(criteria, criterionToCheck) {
-		return _.some(criteria, function (criterion) {
-			return criterion.id === criterionToCheck;
+	function isValidAttributeId(attributes, attributeToCheck) {
+		return _.some(attributes, function (attribute) {
+			return attribute.id === attributeToCheck;
 		});
 	}
 	
-	function toCategories(criteria) {
+	function toCategories(attributes) {
 		return function (geojson) {
-			var criterion = _.find(criteria, function (criterion) {
-				return criterion.id === geojson.properties.criterion;
+			var attribute = _.find(attributes, function (attribute) {
+				return attribute.id === geojson.properties.attribute;
 			});
 			
 			return [{
 					max : {
 						color: exports.MAX_COLOR,
-						value: criterion.format(geojson.properties.bounds.max)
+						value: attribute.format(geojson.properties.bounds.max)
 					},
 					min: {
 						color: exports.MIN_COLOR,
-						value: criterion.format(geojson.properties.bounds.min)
+						value: attribute.format(geojson.properties.bounds.min)
 					}
 				}, {
 					color: exports.NO_DATA_COLOR,
-					count: criterion.noDataCountFor(geojson)
+					count: attribute.noDataCountFor(geojson)
 				}];
 		};
 	}
 	
-	function boundsOf(homes, criterion) {
-		var data = dataFor(homes, criterion);
+	function boundsOf(homes, attributeId) {
+		var data = dataFor(homes, attributeId);
 		
 		return {
 			max: d3.max(data),
@@ -95,8 +96,8 @@
 		};
 	}
 	
-	function dataFor(homes, criterion) {
-		if (criterion === 'price') {
+	function dataFor(homes, attributeId) {
+		if (attributeId === 'price') {
 			return homes.filter(function (home) {
 				return !!home.price;
 			}).map(function (home) {
@@ -109,23 +110,23 @@
 		});
 	}
 	
-	function geojsonFrom(homes, criterion) {
-		var bounds = boundsOf(homes, criterion);
+	function geojsonFrom(homes, attributeId) {
+		var bounds = boundsOf(homes, attributeId);
         var scale = d3.scale.linear()
             .domain([bounds.min, bounds.max])
             .range([exports.MIN_COLOR, exports.MAX_COLOR]);
 			
 		return {
 			type: 'FeatureCollection',
-			features: homes.map(toFeature(scale, criterion)),
+			features: homes.map(toFeature(scale, attributeId)),
 			properties: {
-				criterion: criterion,
+				attribute: attributeId,
 				bounds: bounds
 			}
 		};
 	}
 	
-	function toFeature(scale, criterion) {
+	function toFeature(scale, attributeId) {
 		return function (home) {
 			return {
 				type: 'Feature',
@@ -139,14 +140,14 @@
 					address: home.address,
 					posted: home.posted,
 					grocery: home.grocery,
-					color: colorFor(criterion, home, scale)
+					color: colorFor(attributeId, home, scale)
 				}
 			};
 		};
 	}
 	
-	function colorFor(criterion, home, scale) {
-		if (criterion === 'price') {
+	function colorFor(attributeId, home, scale) {
+		if (attributeId === 'price') {
 			return home.price ? scale(home.price) : exports.NO_DATA_COLOR;			
 		}
 		

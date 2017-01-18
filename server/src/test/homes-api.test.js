@@ -6,12 +6,13 @@
 	var homes = require('./test-data').homes;
 	var Rx = require('rx');
 	var expect = chai.expect;
+	var _ = require('underscore');
 	
 	var ProxicityServer = require('../main/proxicity-server');
 	
 	chai.use(chaiHttp);
 
-	describe.only('Homes API', function () {
+	describe('Homes API', function () {
 		var ERROR_MESSAGE = 'BOOM !';
 		var provider;
 		var server;
@@ -48,6 +49,18 @@
 			
 			it('is valid json', function () {
 				expect(response.headers['content-type']).to.equal('application/json; charset=utf-8');
+			});
+			
+			it('contains an attribute array with two attributes', function () {
+				expect(response.body.attributes.length).to.eql(2);
+				
+				expect(response.body.attributes[0].id).to.eql('price');
+				expect(_.isString(response.body.attributes[0].name)).to.eql(true);
+				expect(response.body.attributes[0].type).to.eql('currency');
+				
+				expect(response.body.attributes[1].id).to.eql('grocery-time');
+				expect(_.isString(response.body.attributes[1].name)).to.eql(true);
+				expect(response.body.attributes[1].type).to.eql('time');
 			});
 			
 			it('contains a data array with all homes', function () {

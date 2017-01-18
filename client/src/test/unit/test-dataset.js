@@ -3,9 +3,20 @@
 
 	exports.dataset = function() {
 		return {
+			attributes: attributes(),
 			data: homes()
 		};
 	};
+	
+	function attributes() {
+		return [{
+			id: 'price',
+			name: 'Price',
+			format: function (value) {
+				return value + '$';
+			}
+		}];
+	}
 
 	function homes() {
 		return [{

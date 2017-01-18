@@ -20,6 +20,7 @@
 		app.get('/dataset', function (request, response) {
 			config.provider.getHomes().subscribe(function (homes) {
 				var dataset = {
+					attributes: attributes(),
 					data: homes
 				};
 				response.json(dataset);
@@ -35,4 +36,16 @@
 		
 		return app;
 	};
+	
+	function attributes() {
+		return [{
+			id: 'price',
+			name: 'Price',
+			type: 'currency'
+		}, {
+			id: 'grocery-time',
+			name: 'Time to closest grocery',
+			type: 'time'
+		}];
+	}
 }());
