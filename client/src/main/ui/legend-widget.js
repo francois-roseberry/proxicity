@@ -42,8 +42,8 @@
 		
 		_.each(model.attributes(), function (attribute) {
 			attributeSelector.append('option')
-				.attr('value', attribute.id)
-				.text(attribute.name);
+				.attr('value', attribute.id())
+				.text(attribute.name());
 		});
 		
 		var list = legendContainer

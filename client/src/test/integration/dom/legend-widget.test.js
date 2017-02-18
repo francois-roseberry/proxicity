@@ -13,7 +13,7 @@
 		var categories;
 		
 		beforeEach(function () {
-			model = MapModel.newModel(testDataset.dataset());
+			model = MapModel.newModel(testDataset.dataset(true));
 			LegendWidget.render(domContext.rootElement, model);
 			
 			model.categories().subscribe(function (cats) {
@@ -45,7 +45,7 @@
 		
 		it('selecting an attribute fires a geojson event in the model', function () {			
 			assert.eventFiredAfter(function() {
-				domContext.selectOption('.criteria-selector', model.attributes()[1].id);
+				domContext.selectOption('.criteria-selector', model.attributes()[1].id());
 			}, model.geojson().skip(1));
 		});
 		
