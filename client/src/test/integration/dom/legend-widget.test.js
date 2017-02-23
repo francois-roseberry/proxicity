@@ -3,6 +3,7 @@
    
 	var MapModel = require('./map-model');
 	var LegendWidget = require('./legend-widget');
+	var DisplaySheetTask = require('./display-sheet-task');
 	
 	var assert = require('./assert');
 	var describeInDom = require('./dom-fixture').describeInDom;
@@ -13,8 +14,11 @@
 		var categories;
 		
 		beforeEach(function () {
-			model = MapModel.newModel(testDataset.dataset(true));
-			LegendWidget.render(domContext.rootElement, model);
+			var dataset = testDataset.dataset(true);
+			model = MapModel.newModel(dataset);
+			var task = DisplaySheetTask.start(dataset);
+			task.visualizationRendered(model);
+			LegendWidget.render(domContext.rootElement, task);
 			
 			model.categories().subscribe(function (cats) {
 				categories = cats;

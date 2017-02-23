@@ -4,9 +4,9 @@
 	var precondition = require('./contract').precondition;
 	var i18n = require('./i18n').i18n();
 
-    exports.render = function (container, model) {
+    exports.render = function (container, task) {
 		precondition(container, 'Legend Widget requires a container');
-		precondition(model, 'Legend Widget requires a model');
+		precondition(task, 'Legend Widget requires a DisplaySheetTask');
 		
 		var legendContainer = d3.select(container[0])
 			.append('div')
@@ -19,13 +19,7 @@
 		legendContainer.append('img')
 			.attr('src', '/images/powered_by_google_on_white.png')
 			.classed('legend-footer', true);
-			
-		model.geojson().subscribe(function (geojson) {
-			var description = i18n.DATA_SOURCE_DESCRIPTION.replace('{0}', geojson.features.length);
-			
-			header.html(description);
-		});
-			
+		
 		var attributeContainer = legendContainer.append('div')
 			.classed('legend-criteria', true);
 			
@@ -35,40 +29,53 @@
 		var attributeSelector = attributeContainer
 			.append('select')
 			.classed('criteria-selector', true);
-			
-		$(attributeSelector[0]).change(function () {
-			model.changeActiveAttribute(this.value);
-		});
-		
-		_.each(model.attributes(), function (attribute) {
-			attributeSelector.append('option')
-				.attr('value', attribute.id())
-				.text(attribute.name());
-		});
 		
 		var list = legendContainer
 			.append('ul')
 			.classed('legend-items', true);
-		
-		model.categories().subscribe(function (categories) {
-			list.selectAll('*').remove();
 			
-			list.selectAll('.legend-item')
-				.data(categories)
-				.enter()
-				.append('li')
-				.classed('legend-item', true)
-				.each(function (category) {
-					var element = d3.select(this);
+		task.status().subscribe(function (status) {
+			status.match({
+				ready: _.noop,
+				displayed: function (model) {
+					model.geojson().subscribe(function (geojson) {
+						var description = i18n.DATA_SOURCE_DESCRIPTION.replace('{0}', geojson.features.length);
+						
+						header.html(description);
+					});
 					
-					if (category.max) {
-						// Bounded category
-						renderBoundedCategory(element, category);
-					} else {
-						// Normal category
-						renderCategory(element, category);
-					}
-				});
+					$(attributeSelector[0]).change(function () {
+						model.changeActiveAttribute(this.value);
+					});
+					
+					_.each(model.attributes(), function (attribute) {
+						attributeSelector.append('option')
+							.attr('value', attribute.id())
+							.text(attribute.name());
+					});
+					
+					model.categories().subscribe(function (categories) {
+						list.selectAll('*').remove();
+						
+						list.selectAll('.legend-item')
+							.data(categories)
+							.enter()
+							.append('li')
+							.classed('legend-item', true)
+							.each(function (category) {
+								var element = d3.select(this);
+								
+								if (category.max) {
+									// Bounded category
+									renderBoundedCategory(element, category);
+								} else {
+									// Normal category
+									renderCategory(element, category);
+								}
+							});
+					});
+				}
+			});
 		});
     };
 	
