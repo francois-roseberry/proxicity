@@ -17,9 +17,13 @@
 		
 		LegendWidget.render($(sheetContainer[0]), task);
 		
+		var visualizationContainer = sheetContainer
+			.append('div')
+			.classed('visualization-container', true);
+		
 		task.status().subscribe(function (status) {
 			status.match({
-				ready: displayVisualization($(sheetContainer[0]), task),
+				ready: displayVisualization($(visualizationContainer[0]), task),
 				displayed: _.noop
 			});
 		});
