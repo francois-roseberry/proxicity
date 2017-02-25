@@ -14,6 +14,12 @@
 		return new Attribute(id, name, TimeFormatter.format);
 	};
 	
+	exports.distance = function (id, name) {
+		return new Attribute(id, name, function (value) {
+			return value + 'm';
+		});
+	};
+	
 	function Attribute(id, name, format) {
 		this._id = id;
 		this._name = name;

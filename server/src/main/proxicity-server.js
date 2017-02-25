@@ -46,6 +46,10 @@
 			id: 'grocery-time',
 			name: 'Time to closest grocery',
 			type: 'time'
+		}, {
+			id: 'grocery-distance',
+			name: 'Distance to closest grocery',
+			type: 'distance'
 		}];
 	}
 }());

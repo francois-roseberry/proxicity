@@ -51,8 +51,8 @@
 				expect(response.headers['content-type']).to.equal('application/json; charset=utf-8');
 			});
 			
-			it('contains an attribute array with two attributes', function () {
-				expect(response.body.attributes.length).to.eql(2);
+			it('contains an attribute array with 3 attributes', function () {
+				expect(response.body.attributes.length).to.eql(3);
 				
 				expect(response.body.attributes[0].id).to.eql('price');
 				expect(_.isString(response.body.attributes[0].name)).to.eql(true);
@@ -61,6 +61,10 @@
 				expect(response.body.attributes[1].id).to.eql('grocery-time');
 				expect(_.isString(response.body.attributes[1].name)).to.eql(true);
 				expect(response.body.attributes[1].type).to.eql('time');
+				
+				expect(response.body.attributes[2].id).to.eql('grocery-distance');
+				expect(_.isString(response.body.attributes[2].name)).to.eql(true);
+				expect(response.body.attributes[2].type).to.eql('distance');
 			});
 			
 			it('contains a data array with all homes', function () {
