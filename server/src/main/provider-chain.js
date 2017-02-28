@@ -8,6 +8,7 @@
 	var GroceriesProvider = require('./groceries-provider');
 	var DistanceProvider = require('./distance-provider');
 	var PriceExtractor = require('./price-extractor');
+	var DistrictProvider = require('./district-provider');
 	
 	exports.fromKijiji = function () {
 		return new ProviderChain(new KijijiDetailsProvider(new KijijiListingProvider()));
@@ -24,6 +25,11 @@
 	
 	ProviderChain.prototype.geocoded = function () {
 		this._provider = new GeocodingProvider(this._provider);
+		return this;
+	};
+	
+	ProviderChain.prototype.withDistricts = function () {
+		this._provider = new DistrictProvider(this._provider);
 		return this;
 	};
 	
