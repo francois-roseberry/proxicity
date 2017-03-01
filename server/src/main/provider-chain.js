@@ -43,7 +43,29 @@
 		return this;
 	};
 	
-	ProviderChain.prototype.getHomes = function () {
-		return this._provider.getHomes();
+	ProviderChain.prototype.getDataset = function () {
+		// TODO have the other providers append elements to the whole dataset instead of just homes
+		return this._provider.getHomes().map(function (homes) {
+			return {
+				attributes: attributes(),
+				data: homes
+			};
+		});
 	};
+	
+	function attributes() {
+		return [{
+			id: 'price',
+			name: 'Price',
+			type: 'currency'
+		}, {
+			id: 'grocery-time',
+			name: 'Time to closest grocery',
+			type: 'time'
+		}, {
+			id: 'grocery-distance',
+			name: 'Distance to closest grocery',
+			type: 'distance'
+		}];
+	}
 }());

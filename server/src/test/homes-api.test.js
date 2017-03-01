@@ -3,7 +3,7 @@
 	
 	var chai = require('chai');
 	var chaiHttp = require('chai-http');
-	var homes = require('./test-data').homes;
+	var dataset = require('./test-data').dataset;
 	var Rx = require('rx');
 	var expect = chai.expect;
 	var _ = require('underscore');
@@ -51,6 +51,8 @@
 				expect(response.headers['content-type']).to.equal('application/json; charset=utf-8');
 			});
 			
+			// TODO move this test on the provider chain
+			// The test here should only verify that the json corresponds to the test dataset
 			it('contains an attribute array with 3 attributes', function () {
 				expect(response.body.attributes.length).to.eql(3);
 				
@@ -68,23 +70,23 @@
 			});
 			
 			it('contains a data array with all homes', function () {
-				expect(response.body.data.length).to.equal(homes().length);
+				expect(response.body.data.length).to.equal(dataset().data.length);
 			});
 			
 			it('contains all home names', function () {
-				homes().forEach(function (home, index) {
+				dataset().data.forEach(function (home, index) {
 					expect(response.body.data[index].name).to.equal(home.name);
 				});
 			});
 			
 			it('contains all home adresses', function () {
-				homes().forEach(function (home, index) {
+				dataset().data.forEach(function (home, index) {
 					expect(response.body.data[index].address).to.equal(home.address);
 				});
 			});
 			
 			it('contains all home coordinates', function () {
-				homes().forEach(function (home, index) {
+				dataset().data.forEach(function (home, index) {
 					expect(response.body.data[index].coordinates).to.deep.equal(home.coordinates);
 				});
 			});
@@ -122,12 +124,12 @@
 				throwErrorOnNextRequest: function (throwOrNot) {
 					this._error = throwOrNot;
 				},
-				getHomes: function() {
+				getDataset: function() {
 					if (this._error) {
 						return Rx.Observable.throw(new Error(ERROR_MESSAGE));
 					}
 					
-					return Rx.Observable.of(homes());
+					return Rx.Observable.of(dataset());
 				}
 			};
 		}

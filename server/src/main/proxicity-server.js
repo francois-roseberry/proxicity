@@ -10,19 +10,15 @@
 		precondition(config, 'Proxicity server requires a configuration object');
 		precondition(_.isNumber(config.port),
 			'Proxicity server needs a port number in its configuration');
-		precondition(config.provider && _.isFunction(config.provider.getHomes),
-			'Proxicity server needs a homes provider in its configuration');
+		precondition(config.provider && _.isFunction(config.provider.getDataset),
+			'Proxicity server needs a dataset provider in its configuration');
 		precondition(_.isString(config.webclient),
 			'Proxicity server requires a webclient directory');
 		
 		app.use(express.static(config.webclient));
 		
 		app.get('/dataset', function (request, response) {
-			config.provider.getHomes().subscribe(function (homes) {
-				var dataset = {
-					attributes: attributes(),
-					data: homes
-				};
+			config.provider.getDataset().subscribe(function (dataset) {
 				response.json(dataset);
 			}, function (error) {
 				response.status(500).json({message: error.message});
@@ -36,20 +32,4 @@
 		
 		return app;
 	};
-	
-	function attributes() {
-		return [{
-			id: 'price',
-			name: 'Price',
-			type: 'currency'
-		}, {
-			id: 'grocery-time',
-			name: 'Time to closest grocery',
-			type: 'time'
-		}, {
-			id: 'grocery-distance',
-			name: 'Distance to closest grocery',
-			type: 'distance'
-		}];
-	}
 }());
