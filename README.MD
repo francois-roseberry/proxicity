@@ -10,6 +10,6 @@ Your google maps API key needs to be placed in a file called google_maps_api.key
 
 ```
 {
-  key: YOUR_API_KEY
+  "key": "YOUR_API_KEY"
 }
 ```
