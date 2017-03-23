@@ -64,7 +64,7 @@
             center: [37.8, -96.9],
             zoom: 5,
             scrollWheelZoom: true,
-            attributionControl: false,
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             zoomAnimation: false,
             markerZoomAnimation: false,
             urlLayerTemplate: "",
