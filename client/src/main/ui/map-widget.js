@@ -16,7 +16,7 @@
 			.classed('proxicity-map-container', true);
 			
 		var map = new L.map('proxicity-map', defaultOptions());
-		L.tileLayer("http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png").addTo(map);
+		L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
 		model.geojson().subscribe(function (geojson) {
 			L.geoJson(geojson, {
