@@ -16,7 +16,7 @@
 			.classed('proxicity-map-container', true);
 			
 		var map = new L.map('proxicity-map', defaultOptions());
-		L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+		L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
 		model.geojson().subscribe(function (geojson) {
 			L.geoJson(geojson, {
@@ -64,7 +64,6 @@
             center: [37.8, -96.9],
             zoom: 5,
             scrollWheelZoom: true,
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             zoomAnimation: false,
             markerZoomAnimation: false,
             urlLayerTemplate: "",
