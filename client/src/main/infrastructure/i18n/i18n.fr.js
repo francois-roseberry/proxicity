@@ -13,4 +13,6 @@
 	exports.DATA_SOURCE_DESCRIPTION = '{0} appartements<br>Extraits de Kijiji';
 	
 	exports.CRITERIA_TYPE_COLOR = 'Couleur';
+	
+	exports.SEE_AD_LINK = "Voir l'annonce";
 }());

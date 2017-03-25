@@ -16,7 +16,9 @@
 			.classed('proxicity-map-container', true);
 			
 		var map = new L.map('proxicity-map', defaultOptions());
-		L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+		L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+				{attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'})
+				.addTo(map);
 
 		model.geojson().subscribe(function (geojson) {
 			L.geoJson(geojson, {
@@ -38,7 +40,8 @@
 						TimeFormatter.format(feature.properties.grocery.time) +
 						'<br><br>' + i18n.PRICE + ' : ' +
 						(feature.properties.price ?
-							feature.properties.price + ' $' : i18n.DATA_UNAVAILABLE));
+							feature.properties.price + ' $' : i18n.DATA_UNAVAILABLE) +
+						'<br><a href="' + feature.properties.url + '">' + i18n.SEE_AD_LINK + '</a>');
 				}
 			}).addTo(map);
 			

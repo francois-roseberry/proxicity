@@ -13,4 +13,6 @@
 	exports.DATA_SOURCE_DESCRIPTION = '{0} homes<br>Fetched from Kijiji';
 	
 	exports.CRITERIA_TYPE_COLOR = 'Color';
+	
+	exports.SEE_AD_LINK = 'See ad';
 }());

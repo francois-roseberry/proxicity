@@ -6,6 +6,7 @@
 	exports.MAX_COLOR = '#ff0000';
 	exports.MIN_COLOR = '#0000ff';
 	exports.NO_DATA_COLOR = '#333333';
+	exports.BASE_URL = "http://www.kijiji.ca";
 
     exports.newModel = function (dataset) {
 		precondition(dataset && _.isArray(dataset.attributes) && _.isArray(dataset.data),
@@ -138,7 +139,8 @@
 					address: home.address,
 					posted: home.posted,
 					grocery: home.grocery,
-					color: colorFor(attributeId, home, scale)
+					color: colorFor(attributeId, home, scale),
+					url: exports.BASE_URL + home.url
 				}
 			};
 		};

@@ -41,6 +41,7 @@
 				expect(feature.properties.grocery.name).to.eql(home.grocery.name);
 				expect(feature.properties.grocery.address).to.eql(home.grocery.address);
 				expect(feature.properties.grocery.time).to.eql(home.grocery.time);
+				expect(feature.properties.url).to.eql(MapModel.BASE_URL + home.url);
 			});
 		});
 		
