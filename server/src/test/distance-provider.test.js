@@ -6,7 +6,7 @@ const _ = require('underscore');
 const DistanceProvider = require('../main/distance-provider');
 const key = require('../../google_maps_api.key.json').key;
 
-describe('A distance provider', function () {
+describe('A distance provider', () => {
 	var FAKE_HOMES = [{
 		name: 'House A', 
 		address: '101, rue Sainte-Anne, Québec, QC, G1R 3X6',
@@ -19,51 +19,51 @@ describe('A distance provider', function () {
 	var fakeProvider;
 	var homesProduced;
 	
-	before(function (done) {
+	before((done) => {
 		fakeProvider = createFakeProvider();
 		distanceProvider = new DistanceProvider(fakeProvider, 'place', key);
 		
-		distanceProvider.getHomes().subscribe(function (homes) {
+		distanceProvider.getHomes().subscribe((homes) => {
 			homesProduced = homes;
 		}, done, done);
 	});
 	
-	it('cannot be created without a provider', function () {
-		expect(function () {
+	it('cannot be created without a provider', () => {
+		expect(() => {
 			distanceProvider = new DistanceProvider({});
 		}).to.throw(/A DistanceProvider requires a provider/);
 	});
 	
-	it('cannot be created without a place type', function () {
-		expect(function () {
+	it('cannot be created without a place type', () => {
+		expect(() => {
 			distanceProvider = new DistanceProvider(fakeProvider);
 		}).to.throw(/A DistanceProvider requires a place type/);
 	});
 	
-	it('cannot be created without an API key', function () {
-		expect(function () {
+	it('cannot be created without an API key', () => {
+		expect(() => {
 			distanceProvider = new DistanceProvider(fakeProvider, 'place');
 		}).to.throw(/A DistanceProvider requires an API key/);
 	});
 	
-	it('preserve all existing fields except the place', function () {
-		homesProduced.forEach(function (home, index) {
-			_.without(_.keys(FAKE_HOMES[index]), 'place').forEach(function (key) {
+	it('preserve all existing fields except the place', () => {
+		homesProduced.forEach((home, index) => {
+			_.without(_.keys(FAKE_HOMES[index]), 'place').forEach((key) => {
 				expect(home[key]).to.deep.equal(FAKE_HOMES[index][key]);
 			});
 		});
 	});
 	
-	it('preserve all existing fields inside the place', function () {
-		homesProduced.forEach(function (home, index) {
-			_.keys(FAKE_HOMES[index].place).forEach(function (key) {
+	it('preserve all existing fields inside the place', () => {
+		homesProduced.forEach((home, index) => {
+			_.keys(FAKE_HOMES[index].place).forEach((key) => {
 				expect(home.place[key]).to.deep.equal(FAKE_HOMES[index].place[key]);
 			});
 		});
 	});
 	
-	it('add distance and time fields to the place', function () {
-		homesProduced.forEach(function (home) {
+	it('add distance and time fields to the place', () => {
+		homesProduced.forEach((home) => {
 			expect(home.place.distance).to.be.a('number');
 			expect(home.place.time).to.be.a('number');
 		});

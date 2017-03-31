@@ -10,43 +10,43 @@ describe('A Kijiji details provider', function () {
 	var kijijiProvider;
 	var homesProduced;
 	
-	before(function (done) {
+	before((done) => {
 		kijijiProvider = new KijijiDetailsProvider(singleHomeKijijiProvider());
-		kijijiProvider.getHomes().subscribe(function (homes) {
+		kijijiProvider.getHomes().subscribe((homes) => {
 			homesProduced = homes;
 		}, done, done);
 	});
 	
-	describe('returns a collection of homes that', function () {
-		it('have names', function () {
-			homesProduced.forEach(function (home) {
+	describe('returns a collection of homes that', () => {
+		it('have names', () => {
+			homesProduced.forEach((home) => {
 				expect(home.name).to.be.a('string');
 				expect(home.name).to.not.equal('');
 			});
 		});
 		
-		it('have urls', function () {
-			homesProduced.forEach(function (home) {
+		it('have urls', () => {
+			homesProduced.forEach((home) => {
 				expect(home.url).to.be.a('string');
 				expect(home.url).to.match(/^\/[^ ]*$/);
 			});
 		});
 		
-		it('have prices', function () {
-			homesProduced.forEach(function (home) {
+		it('have prices', () => {
+			homesProduced.forEach((home) => {
 				expect(home.price).to.be.a('string');
 			});
 		});
 		
-		it('have adresses', function () {
-			homesProduced.forEach(function(home) {
+		it('have adresses', () => {
+			homesProduced.forEach((home) => {
 				expect(home.address).to.be.a('string');
 				expect(home.address).to.not.equal('');
 			});
 		});
 		
-		it('have posted dates', function () {
-			homesProduced.forEach(function (home) {
+		it('have posted dates', () => {
+			homesProduced.forEach((home) => {
 				expect(home.posted).to.be.a('string');
 				expect(home.posted).to.not.equal('');
 			});
@@ -55,8 +55,8 @@ describe('A Kijiji details provider', function () {
 	
 	function singleHomeKijijiProvider() {
 		return {
-			getHomes: function () {
-				return new KijijiListingProvider().getHomes().map(function (homes) {
+			getHomes: () => {
+				return new KijijiListingProvider().getHomes().map((homes) => {
 					return [homes[0]];
 				});
 			}

@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-exports.dataset = function () {
+exports.dataset = () => {
 	return {
 		attributes: attributes(),
 		data: homes()

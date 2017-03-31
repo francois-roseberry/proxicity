@@ -9,23 +9,23 @@ describe('A Kijiji listing provider', function () {
 	var kijijiProvider;
 	var homesProduced;
 	
-	before(function (done) {
+	before((done) => {
 		kijijiProvider = new KijijiListingProvider();
-		kijijiProvider.getHomes().subscribe(function (homes) {
+		kijijiProvider.getHomes().subscribe((homes) => {
 			homesProduced = homes;
 		}, done, done);
 	});
 	
-	describe('returns a collection of homes that', function () {
-		it('have names', function () {
-			homesProduced.forEach(function (home) {
+	describe('returns a collection of homes that', () => {
+		it('have names', () => {
+			homesProduced.forEach((home) => {
 				expect(home.name).to.be.a('string');
 				expect(home.name).to.not.equal('');
 			});
 		});
 		
-		it('have urls', function () {
-			homesProduced.forEach(function (home) {
+		it('have urls', () => {
+			homesProduced.forEach((home) => {
 				expect(home.url).to.be.a('string');
 				expect(home.url).to.match(/^\/[^ ]*$/);
 			});

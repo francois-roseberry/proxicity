@@ -11,12 +11,12 @@ const ProxicityServer = require('../main/proxicity-server');
 
 chai.use(chaiHttp);
 
-describe('Homes API', function () {
+describe('Homes API', () => {
 	var ERROR_MESSAGE = 'BOOM !';
 	var provider;
 	var server;
 	
-	before(function () {
+	before(() => {
 		provider = createTestProvider();
 		
 		server = ProxicityServer.create({
@@ -26,33 +26,33 @@ describe('Homes API', function () {
 		});
 	});
 	
-	describe('when dataset is requested', function () {
+	describe('when dataset is requested', () => {
 		var response;
 		var body;
 		
-		beforeEach(function (done) {
+		beforeEach((done) => {
 			provider.throwErrorOnNextRequest(false);
 			
 			chai.request(server)
 				.get('/dataset')
-				.end(function (err, res) {
+				.end((err, res) => {
 					response = res;
 					body = res.body;
 					done();
 				});
 		});
 		
-		it('returns status response 200', function () {
+		it('returns status response 200', () => {
 			expect(response.statusCode).to.equal(200);
 		});
 		
-		it('is valid json', function () {
+		it('is valid json', () => {
 			expect(response.headers['content-type']).to.equal('application/json; charset=utf-8');
 		});
 		
 		// TODO move this test on the provider chain
 		// The test here should only verify that the json corresponds to the test dataset
-		it('contains an attribute array with 3 attributes', function () {
+		it('contains an attribute array with 3 attributes', () => {
 			expect(response.body.attributes.length).to.eql(3);
 			
 			expect(response.body.attributes[0].id).to.eql('price');
@@ -68,52 +68,52 @@ describe('Homes API', function () {
 			expect(response.body.attributes[2].type).to.eql('distance');
 		});
 		
-		it('contains a data array with all homes', function () {
+		it('contains a data array with all homes', () => {
 			expect(response.body.data.length).to.equal(dataset().data.length);
 		});
 		
-		it('contains all home names', function () {
-			dataset().data.forEach(function (home, index) {
+		it('contains all home names', () => {
+			dataset().data.forEach((home, index) => {
 				expect(response.body.data[index].name).to.equal(home.name);
 			});
 		});
 		
-		it('contains all home adresses', function () {
-			dataset().data.forEach(function (home, index) {
+		it('contains all home adresses', () => {
+			dataset().data.forEach((home, index) => {
 				expect(response.body.data[index].address).to.equal(home.address);
 			});
 		});
 		
-		it('contains all home coordinates', function () {
-			dataset().data.forEach(function (home, index) {
+		it('contains all home coordinates', () => {
+			dataset().data.forEach((home, index) => {
 				expect(response.body.data[index].coordinates).to.deep.equal(home.coordinates);
 			});
 		});
 	});
 	
-	describe('when inner provider throws an error', function () {
+	describe('when inner provider throws an error', () => {
 		var errorResponse;
 	
-		before(function (done) {
+		before((done) => {
 			provider.throwErrorOnNextRequest(true);
 			
 			chai.request(server)
 				.get('/dataset')
-				.end(function (err, res) {
+				.end((err, res) => {
 					errorResponse = res;
 					done();
 				});
 		});
 		
-		it('returns status response 500', function () {
+		it('returns status response 500', () => {
 			expect(errorResponse.statusCode).to.equal(500);
 		});
 		
-		it('is valid json', function () {
+		it('is valid json', () => {
 			expect(errorResponse.headers['content-type']).to.equal('application/json; charset=utf-8');
 		});
 		
-		it('contains error message', function () {
+		it('contains error message', () => {
 			expect(errorResponse.body.message).to.equal(ERROR_MESSAGE);
 		});
 	});
