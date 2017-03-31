@@ -1,12 +1,12 @@
 "use strict";
 
-var fs = require('fs');
-var Rx = require('rx');
-var wicket = require('wicket/wicket');
-var inside = require('turf-inside');
-var flipCoordinates = require('turf-flip');
-var _ = require('underscore');
-var precondition = require('./infrastructure/contract.js').precondition;
+const fs = require('fs');
+const Rx = require('rx');
+const wicket = require('wicket/wicket');
+const inside = require('turf-inside');
+const flipCoordinates = require('turf-flip');
+const _ = require('underscore');
+const precondition = require('./infrastructure/contract.js').precondition;
 
 function DistrictProvider(provider, filename) {
 	precondition(provider && _.isFunction(provider.getHomes), 'A DistrictProvider requires a provider');

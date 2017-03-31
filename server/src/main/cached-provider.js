@@ -1,9 +1,9 @@
 "use strict";
 
-var fs = require('fs');
-var Rx = require('rx');
-var _ = require('underscore');
-var precondition = require('./infrastructure/contract').precondition;
+const fs = require('fs');
+const Rx = require('rx');
+const _ = require('underscore');
+const precondition = require('./infrastructure/contract').precondition;
 
 function CachedProvider(provider, filename) {
 	precondition(provider && _.isFunction(provider.getHomes), 'A CachedProvider requires a provider');
