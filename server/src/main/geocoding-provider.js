@@ -1,11 +1,11 @@
 "use strict";
 	
-var request = require('request');
-var Rx = require('rx');
-var _ = require('underscore');
-var precondition = require('./infrastructure/contract.js').precondition;
+const request = require('request');
+const Rx = require('rx');
+const _ = require('underscore');
+const precondition = require('./infrastructure/contract.js').precondition;
 
-var BASE_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=';
+const BASE_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=';
 
 function GeocodingProvider(provider) {
 	precondition(provider && _.isFunction(provider.getHomes), 'A GeocodingProvider requires a provider');
