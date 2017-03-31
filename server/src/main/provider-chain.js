@@ -1,13 +1,13 @@
 "use strict";
 	
-var CachedProvider = require('./cached-provider');
-var KijijiListingProvider = require('./kijiji-listing-provider');
-var KijijiDetailsProvider = require('./kijiji-details-provider');
-var GeocodingProvider = require('./geocoding-provider');
-var GroceriesProvider = require('./groceries-provider');
-var DistanceProvider = require('./distance-provider');
-var PriceExtractor = require('./price-extractor');
-var DistrictProvider = require('./district-provider');
+const CachedProvider = require('./cached-provider');
+const KijijiListingProvider = require('./kijiji-listing-provider');
+const KijijiDetailsProvider = require('./kijiji-details-provider');
+const GeocodingProvider = require('./geocoding-provider');
+const GroceriesProvider = require('./groceries-provider');
+const DistanceProvider = require('./distance-provider');
+const PriceExtractor = require('./price-extractor');
+const DistrictProvider = require('./district-provider');
 
 exports.fromKijiji = function () {
 	return new ProviderChain(new KijijiDetailsProvider(new KijijiListingProvider()));

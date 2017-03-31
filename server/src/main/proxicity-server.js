@@ -1,9 +1,9 @@
 "use strict";
 
-var express = require('express');
-var app = express();
-var _ = require('underscore');
-var precondition = require('./infrastructure/contract').precondition;
+const express = require('express');
+const app = express();
+const _ = require('underscore');
+const precondition = require('./infrastructure/contract').precondition;
 
 exports.create = function (config) {
 	precondition(config, 'Proxicity server requires a configuration object');

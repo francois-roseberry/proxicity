@@ -2,10 +2,10 @@
 
 /* jshint expr:true */
 
-var expect  = require('chai').expect;
-var Rx = require('rx');
-var _ = require('underscore');
-var PriceExtractor = require('../main/price-extractor');
+const expect  = require('chai').expect;
+const Rx = require('rx');
+const _ = require('underscore');
+const PriceExtractor = require('../main/price-extractor');
 
 describe('A price extractor', function () {
 	var FAKE_HOMES = [{

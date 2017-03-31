@@ -1,11 +1,11 @@
 "use strict";
 
-var request = require('request');
-var Rx = require('rx');
-var _ = require('underscore');
-var precondition = require('./infrastructure/contract.js').precondition;
+const request = require('request');
+const Rx = require('rx');
+const _ = require('underscore');
+const precondition = require('./infrastructure/contract.js').precondition;
 
-var URL_TEMPLATE = 'https://maps.googleapis.com/maps/api/place/nearbysearch' +
+const URL_TEMPLATE = 'https://maps.googleapis.com/maps/api/place/nearbysearch' +
 	'/json?location={0},{1}&rankby=distance&types=grocery_or_supermarket&key={2}';
 
 function GroceriesProvider(provider, key) {

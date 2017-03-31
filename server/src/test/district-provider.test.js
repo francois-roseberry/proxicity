@@ -1,9 +1,9 @@
 "use strict";
 
-var expect  = require('chai').expect;
-var Rx = require('rx');
-var _ = require('underscore');
-var DistrictProvider = require('../main/district-provider');
+const expect  = require('chai').expect;
+const Rx = require('rx');
+const _ = require('underscore');
+const DistrictProvider = require('../main/district-provider');
 
 describe('A district provider', function () {
 	var DISTRICT_FILE = 'districts.json';

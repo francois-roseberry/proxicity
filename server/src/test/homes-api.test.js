@@ -4,10 +4,10 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var dataset = require('./test-data').dataset;
 var Rx = require('rx');
-var expect = chai.expect;
-var _ = require('underscore');
+const expect = chai.expect;
+const _ = require('underscore');
 
-var ProxicityServer = require('../main/proxicity-server');
+const ProxicityServer = require('../main/proxicity-server');
 
 chai.use(chaiHttp);
 

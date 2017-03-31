@@ -1,9 +1,9 @@
 "use strict";
 
-var expect  = require('chai').expect;
-var fs = require('fs');
-var Rx = require('rx');	
-var CachedProvider = require('../main/cached-provider');
+const expect  = require('chai').expect;
+const fs = require('fs');
+const Rx = require('rx');	
+const CachedProvider = require('../main/cached-provider');
 
 describe('A cached provider', function () {
 	var CACHED_FILE = 'cached-file.test.json';

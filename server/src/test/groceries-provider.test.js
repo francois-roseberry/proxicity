@@ -1,10 +1,10 @@
 "use strict";
 
-var expect  = require('chai').expect;
-var Rx = require('rx');
-var _ = require('underscore');
-var GroceriesProvider = require('../main/groceries-provider');
-var key = require('../../google_maps_api.key.json').key;
+const expect  = require('chai').expect;
+const Rx = require('rx');
+const _ = require('underscore');
+const GroceriesProvider = require('../main/groceries-provider');
+const key = require('../../google_maps_api.key.json').key;
 
 describe('A groceries provider', function () {
 	var FAKE_HOMES = [{

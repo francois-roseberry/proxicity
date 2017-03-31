@@ -1,10 +1,10 @@
 "use strict";
 
-var expect  = require('chai').expect;
-var Rx = require('rx');
-var _ = require('underscore');
-var DistanceProvider = require('../main/distance-provider');
-var key = require('../../google_maps_api.key.json').key;
+const expect  = require('chai').expect;
+const Rx = require('rx');
+const _ = require('underscore');
+const DistanceProvider = require('../main/distance-provider');
+const key = require('../../google_maps_api.key.json').key;
 
 describe('A distance provider', function () {
 	var FAKE_HOMES = [{

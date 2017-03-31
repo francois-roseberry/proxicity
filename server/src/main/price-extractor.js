@@ -1,7 +1,7 @@
 "use strict";
 
-var _ = require('underscore');
-var precondition = require('./infrastructure/contract.js').precondition;
+const _ = require('underscore');
+const precondition = require('./infrastructure/contract.js').precondition;
 
 function PriceExtractor(provider) {
 	precondition(provider && _.isFunction(provider.getHomes), 'A PriceExtractor requires a provider');

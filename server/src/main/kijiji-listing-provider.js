@@ -1,10 +1,10 @@
 "use strict";
 
-var request = require('request');
-var cheerio = require('cheerio');
-var Rx = require('rx');
+const request = require('request');
+const cheerio = require('cheerio');
+const Rx = require('rx');
 
-var BASE_URL = "http://www.kijiji.ca";
+const BASE_URL = "http://www.kijiji.ca";
 
 function KijijiListingProvider() {}
 

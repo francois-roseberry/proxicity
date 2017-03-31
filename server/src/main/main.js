@@ -1,13 +1,13 @@
 "use strict";
 
-var fs = require('fs');
-var path = require('path');
-var ProxicityServer = require('./proxicity-server');
-var program = require('commander');
+const fs = require('fs');
+const path = require('path');
+const ProxicityServer = require('./proxicity-server');
+const program = require('commander');
 
-var ProviderChain = require('./provider-chain');
+const ProviderChain = require('./provider-chain');
 
-var key = require('../../google_maps_api.key.json').key;
+const key = require('../../google_maps_api.key.json').key;
 
 program
 	.version('0.1')

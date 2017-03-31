@@ -1,7 +1,7 @@
 "use strict";
 
-var expect  = require('chai').expect;
-var KijijiListingProvider = require('../main/kijiji-listing-provider');
+const expect  = require('chai').expect;
+const KijijiListingProvider = require('../main/kijiji-listing-provider');
 
 describe('A Kijiji listing provider', function () {
 	this.timeout(10000);

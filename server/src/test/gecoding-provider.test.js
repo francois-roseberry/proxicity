@@ -1,9 +1,9 @@
 ﻿"use strict";
 
-var expect  = require('chai').expect;
-var Rx = require('rx');
-var _ = require('underscore');
-var GeocodingProvider = require('../main/geocoding-provider');
+const expect  = require('chai').expect;
+const Rx = require('rx');
+const _ = require('underscore');
+const GeocodingProvider = require('../main/geocoding-provider');
 
 describe('A geocoding provider', function () {
 	var FAKE_HOMES = [{
