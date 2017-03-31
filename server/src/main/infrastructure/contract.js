@@ -1,6 +1,6 @@
 "use strict";
 
-exports.precondition = function(condition, message) {
+exports.precondition = (condition, message) => {
 	if (!condition) {
 		throw new Error(message);
 	}
