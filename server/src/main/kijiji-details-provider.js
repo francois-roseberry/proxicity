@@ -6,33 +6,35 @@ const Rx = require('rx');
 
 const BASE_URL = "http://www.kijiji.ca";
 
-function KijijiDetailsProvider(provider) {
-	this._provider = provider;
-}
-
-/**
- * Get homes by scraping the appartment ads on Kijiji (since their API is now closed for new API accounts)
- *
- * Ebay has an API for getting ads. Maybe it works for Kijiji as well ?
- */
-KijijiDetailsProvider.prototype.getHomes = function () {	
-	return this._provider.getHomes().flatMap(function (homes) {
-		// If this doesn't work, return the observable directly
-		var observables = homes.map(function (home) {
-			return getHomeDetails(home.url).map(function (details) {
-				return {
-					name: home.name,
-					url: home.url,
-					price: details.price,
-					address: details.address,
-					posted: details.posted
-				};
+class KijijiDetailsProvider {
+	constructor(provider) {
+		this._provider = provider;
+	}
+	
+	/**
+	 * Get homes by scraping the appartment ads on Kijiji (since their API is now closed for new API accounts)
+	 *
+	 * Ebay has an API for getting ads. Maybe it works for Kijiji as well ?
+	 */
+	getHomes() {	
+		return this._provider.getHomes().flatMap(function (homes) {
+			// If this doesn't work, return the observable directly
+			var observables = homes.map(function (home) {
+				return getHomeDetails(home.url).map(function (details) {
+					return {
+						name: home.name,
+						url: home.url,
+						price: details.price,
+						address: details.address,
+						posted: details.posted
+					};
+				});
 			});
+			
+			return Rx.Observable.forkJoin(observables);
 		});
-		
-		return Rx.Observable.forkJoin(observables);
-	});
-};
+	}
+}
 
 function getHomeDetails(url) {
 	var subject = new Rx.AsyncSubject();
