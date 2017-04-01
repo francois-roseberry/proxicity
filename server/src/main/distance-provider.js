@@ -23,19 +23,10 @@ class DistanceProvider {
 		var key = this._key;
 		var placeType = this._placeType;
 		var subject = new Rx.AsyncSubject();
-		this._provider.getHomes().subscribe(function (homes) {
-			var subjects = homes.map(function(home) {
-				var origin = encodeURIComponent(home.address);
-				var destination = encodeURIComponent(home[placeType].address);
-				var url	= URL_TEMPLATE
-					.replace('{0}', origin)
-					.replace('{1}', destination)
-					.replace('{2}', key);
-				
-				return distanceSubject(url, home, placeType);
-			});
+		this._provider.getHomes().subscribe((homes) => {
+			var subjects = homes.map(toDistanceSubject(key, placeType));
 			
-			Rx.Observable.forkJoin(subjects).subscribe(function (homesWithGroceries) {
+			Rx.Observable.forkJoin(subjects).subscribe((homesWithGroceries) => {
 				subject.onNext(homesWithGroceries);
 				subject.onCompleted();
 			});
@@ -43,6 +34,19 @@ class DistanceProvider {
 		
 		return subject.asObservable();
 	}
+}
+
+function toDistanceSubject(key, placeType) {
+	return (home) => {
+		var origin = encodeURIComponent(home.address);
+		var destination = encodeURIComponent(home[placeType].address);
+		var url	= URL_TEMPLATE
+			.replace('{0}', origin)
+			.replace('{1}', destination)
+			.replace('{2}', key);
+		
+		return distanceSubject(url, home, placeType);
+	};
 }
 
 function distanceSubject(url, home, placeType) {

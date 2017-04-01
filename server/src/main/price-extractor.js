@@ -11,8 +11,8 @@ class PriceExtractor {
 	}
 	
 	getHomes() {
-		return this._provider.getHomes().map(function (homes) {
-			return homes.map(function (home) {
+		return this._provider.getHomes().map((homes) => {
+			return homes.map((home) => {
 				if (home.price.endsWith('$')) {
 					var priceString = home.price.substring(0, home.price.length - 1).replace(/\s/g, '');
 					home.price = parseInt(priceString);

@@ -22,24 +22,13 @@ class KijijiListingProvider {
 		
 		var subject = new Rx.AsyncSubject();
 		
-		request(BASE_URL + urls['3 1/2'], function (error, response, html) {
+		request(BASE_URL + urls['3 1/2'], (error, response, html) => {
 			if (error) {
 				subject.onError(error);
 				return;
 			}
 			
-			var $ = cheerio.load(html);
-			var homes = [];
-			$('.title a').each(function () {
-				var node = $(this);
-				var name = removeStartingJunkCharactersFrom(node.text());				
-				var url = node.attr('href');
-				
-				homes.push({
-					name: name,
-					url: url
-				});
-			});
+			var homes = homesFrom(html);
 			
 			subject.onNext(homes);
 			subject.onCompleted();
@@ -47,6 +36,22 @@ class KijijiListingProvider {
 		
 		return subject.asObservable();
 	}
+}
+
+function homesFrom(html) {
+	var $ = cheerio.load(html);
+	var homes = [];
+	$('.title a').each(function () {
+		var node = $(this);
+		var name = removeStartingJunkCharactersFrom(node.text());				
+		var url = node.attr('href');
+		
+		homes.push({
+			name: name,
+			url: url
+		});
+	});
+	return homes;
 }
 
 function removeStartingJunkCharactersFrom(name) {

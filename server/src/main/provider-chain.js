@@ -41,7 +41,7 @@ class ProviderChain {
 	
 	getDataset() {
 		// TODO have the other providers append elements to the whole dataset instead of just homes
-		return this._provider.getHomes().map(function (homes) {
+		return this._provider.getHomes().map((homes) => {
 			return {
 				attributes: attributes(),
 				data: homes

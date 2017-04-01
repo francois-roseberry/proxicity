@@ -19,13 +19,13 @@ program
 			'defaults to 3000')
 	.parse(process.argv);
 	
-fs.access(program.cache, fs.R_OK | fs.W_OK, function (err) {
+fs.access(program.cache, fs.R_OK | fs.W_OK, (err) => {
 	if (err) {
 		console.log('Cache directory is inexistent or inaccessible by the application');
 		return;
 	}
 	
-	fs.stat(program.cache, function (err, stats) {
+	fs.stat(program.cache, (err, stats) => {
 		if (err) {
 			console.log('Cannot access cache directory, details : ' + err);
 			return;

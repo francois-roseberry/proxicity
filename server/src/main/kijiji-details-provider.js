@@ -17,17 +17,11 @@ class KijijiDetailsProvider {
 	 * Ebay has an API for getting ads. Maybe it works for Kijiji as well ?
 	 */
 	getHomes() {	
-		return this._provider.getHomes().flatMap(function (homes) {
+		return this._provider.getHomes().flatMap((homes) => {
 			// If this doesn't work, return the observable directly
-			var observables = homes.map(function (home) {
-				return getHomeDetails(home.url).map(function (details) {
-					return {
-						name: home.name,
-						url: home.url,
-						price: details.price,
-						address: details.address,
-						posted: details.posted
-					};
+			var observables = homes.map((home) => {
+				return getHomeDetails(home.url).map((details) => {
+					return detailedHomeFrom(home, details);
 				});
 			});
 			
@@ -36,9 +30,19 @@ class KijijiDetailsProvider {
 	}
 }
 
+function detailedHomeFrom(home, details) {
+	return {
+		name: home.name,
+		url: home.url,
+		price: details.price,
+		address: details.address,
+		posted: details.posted
+	};
+}
+
 function getHomeDetails(url) {
 	var subject = new Rx.AsyncSubject();
-	request(BASE_URL + url, function (error, response, html) {
+	request(BASE_URL + url, (error, response, html) => {
 		if (error) {
 			subject.onError(error);
 			return;

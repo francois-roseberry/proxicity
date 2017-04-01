@@ -5,7 +5,7 @@ const app = express();
 const _ = require('underscore');
 const precondition = require('./infrastructure/contract').precondition;
 
-exports.create = function (config) {
+exports.create = (config) => {
 	precondition(config, 'Proxicity server requires a configuration object');
 	precondition(_.isNumber(config.port),
 		'Proxicity server needs a port number in its configuration');
@@ -16,15 +16,15 @@ exports.create = function (config) {
 	
 	app.use(express.static(config.webclient));
 	
-	app.get('/dataset', function (request, response) {
-		config.provider.getDataset().subscribe(function (dataset) {
+	app.get('/dataset', (request, response) => {
+		config.provider.getDataset().subscribe((dataset) => {
 			response.json(dataset);
-		}, function (error) {
+		}, (error) => {
 			response.status(500).json({message: error.message});
 		}, _.noop);
 	});
 	
-	app.listen(config.port, function () {
+	app.listen(config.port, () => {
 		console.log('Proxicity server started');
 		console.log('Serving directory ' + config.webclient + ' on port ' + config.port);
 	});

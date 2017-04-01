@@ -16,15 +16,10 @@ class GeocodingProvider {
 	
 	getHomes() {
 		var subject = new Rx.AsyncSubject();
-		this._provider.getHomes().subscribe(function (homes) {
-			var subjects = homes.map(function(home) {
-				var encodedAddress = encodeURIComponent(home.address);
-				var url	= BASE_URL + encodedAddress + "&sensor=false";
-				
-				return geocodingSubject(url, home);
-			});
+		this._provider.getHomes().subscribe((homes) => {
+			var subjects = homes.map(toGeocodingSubject);
 			
-			Rx.Observable.forkJoin(subjects).subscribe(function (geocodedHomes) {
+			Rx.Observable.forkJoin(subjects).subscribe((geocodedHomes) => {
 				subject.onNext(geocodedHomes);
 				subject.onCompleted();
 			});
@@ -34,9 +29,16 @@ class GeocodingProvider {
 	}
 }
 
+function toGeocodingSubject(home) {
+	var encodedAddress = encodeURIComponent(home.address);
+	var url	= BASE_URL + encodedAddress + "&sensor=false";
+	
+	return geocodingSubject(url, home);
+}
+
 function geocodingSubject(url, home) {
 	var subject = new Rx.AsyncSubject();
-	request(url, function (error, response, body) {
+	request(url, (error, response, body) => {
 		if (error) {
 			subject.onError(error);
 		}

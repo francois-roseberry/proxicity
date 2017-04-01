@@ -18,11 +18,11 @@ class CachedProvider {
 		var subject = new Rx.AsyncSubject();
 		var provider = this._provider;
 		var filename = this._filename;
-		fs.readFile(this._filename, 'utf-8', function (err, data) {
+		fs.readFile(this._filename, 'utf-8', (err, data) => {
 			if (err) {
 				// Error reading, file's probably absent.
 				provider.getHomes().subscribe(cacheResults(filename, subject),
-					function (err) {
+					(err) => {
 						subject.onError(err);
 					});
 					

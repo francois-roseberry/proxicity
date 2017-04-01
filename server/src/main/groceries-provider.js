@@ -20,17 +20,10 @@ class GroceriesProvider {
 	getHomes() {
 		var key = this._key;
 		var subject = new Rx.AsyncSubject();
-		this._provider.getHomes().subscribe(function (homes) {
-			var subjects = homes.map(function(home) {
-				var url	= URL_TEMPLATE
-					.replace('{0}', home.coords.lat)
-					.replace('{1}', home.coords.lng)
-					.replace('{2}', key);
-				
-				return grocerySubject(url, home);
-			});
+		this._provider.getHomes().subscribe((homes) => {
+			var subjects = homes.map(toGrocerySubject(key));
 			
-			Rx.Observable.forkJoin(subjects).subscribe(function (homesWithGroceries) {
+			Rx.Observable.forkJoin(subjects).subscribe((homesWithGroceries) => {
 				subject.onNext(homesWithGroceries);
 				subject.onCompleted();
 			});
@@ -40,9 +33,20 @@ class GroceriesProvider {
 	}
 }
 
+function toGrocerySubject(key) {
+	return (home) => {
+		var url	= URL_TEMPLATE
+			.replace('{0}', home.coords.lat)
+			.replace('{1}', home.coords.lng)
+			.replace('{2}', key);
+	
+		return grocerySubject(url, home);
+	};
+}
+
 function grocerySubject(url, home) {
 	var subject = new Rx.AsyncSubject();
-	request(url, function (error, response, body) {
+	request(url, (error, response, body) => {
 		if (error) {
 			subject.onError(error);
 		}
