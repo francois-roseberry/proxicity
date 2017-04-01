@@ -37,8 +37,8 @@ class CachedProvider {
 }
 
 function cacheResults(filename, subject) {
-	return function (homes) {
-		fs.writeFile(filename, JSON.stringify(homes, null, 2), function(err) {
+	return (homes) => {
+		fs.writeFile(filename, JSON.stringify(homes, null, 2), (err) => {
 			if (err) {
 				subject.onError(err);
 				return;

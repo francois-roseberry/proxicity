@@ -9,7 +9,7 @@ const DistanceProvider = require('./distance-provider');
 const PriceExtractor = require('./price-extractor');
 const DistrictProvider = require('./district-provider');
 
-class ProviderChain {
+class DatasetProvider {
 	constructor(provider) {
 		this._provider = provider;
 	}
@@ -67,5 +67,5 @@ function attributes() {
 }
 
 exports.fromKijiji = function () {
-	return new ProviderChain(new KijijiDetailsProvider(new KijijiListingProvider()));
+	return new DatasetProvider(new KijijiDetailsProvider(new KijijiListingProvider()));
 };

@@ -5,7 +5,7 @@ const path = require('path');
 const ProxicityServer = require('./proxicity-server');
 const program = require('commander');
 
-const ProviderChain = require('./provider-chain');
+const DatasetProvider = require('./dataset-provider');
 
 const key = require('../../google_maps_api.key.json').key;
 
@@ -49,7 +49,7 @@ function startServer() {
 }
 
 function createProvider() {
-	return ProviderChain.fromKijiji()
+	return DatasetProvider.fromKijiji()
 		.cached(path.join(program.cache, 'kijiji-homes.json'))
 		.geocoded()
 		.cached(path.join(program.cache, 'geocoded-homes.json'))
