@@ -1,11 +1,10 @@
 "use strict";
 
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var dataset = require('./test-data').dataset;
-var Rx = require('rx');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const dataset = require('./test-data').dataset;
+const Rx = require('rx');
 const expect = chai.expect;
-const _ = require('underscore');
 
 const ProxicityServer = require('../main/proxicity-server');
 
@@ -50,22 +49,18 @@ describe('Homes API', () => {
 			expect(response.headers['content-type']).to.equal('application/json; charset=utf-8');
 		});
 		
-		// TODO move this test on the provider chain
-		// The test here should only verify that the json corresponds to the test dataset
-		it('contains an attribute array with 3 attributes', () => {
-			expect(response.body.attributes.length).to.eql(3);
+		it('contains attributes', () => {
+			expect(response.body.attributes.length).to.eql(dataset().attributes.length);
 			
-			expect(response.body.attributes[0].id).to.eql('price');
-			expect(_.isString(response.body.attributes[0].name)).to.eql(true);
-			expect(response.body.attributes[0].type).to.eql('currency');
-			
-			expect(response.body.attributes[1].id).to.eql('grocery-time');
-			expect(_.isString(response.body.attributes[1].name)).to.eql(true);
-			expect(response.body.attributes[1].type).to.eql('time');
-			
-			expect(response.body.attributes[2].id).to.eql('grocery-distance');
-			expect(_.isString(response.body.attributes[2].name)).to.eql(true);
-			expect(response.body.attributes[2].type).to.eql('distance');
+			dataset().attributes.forEach((attribute, index) => {
+				expect(response.body.attributes[index].id).to.eql(attribute.id);
+				expect(response.body.attributes[index].name).to.eql(attribute.name);
+				expect(response.body.attributes[index].type).to.eql(attribute.type);
+			});
+		});
+		
+		it('pass the level queried to the dataset provider', () => {
+			expect(provider.getLastLevelQueried()).to.equal('home');
 		});
 		
 		it('contains a data array with all homes', () => {
@@ -120,15 +115,20 @@ describe('Homes API', () => {
 	
 	function createTestProvider() {
 		return {
+			_lastLevelQueried: '',
 			throwErrorOnNextRequest: function (throwOrNot) {
 				this._error = throwOrNot;
 			},
-			getDataset: function() {
+			getDataset: function(level) {
+				this._lastLevelQueried = level;
 				if (this._error) {
 					return Rx.Observable.throw(new Error(ERROR_MESSAGE));
 				}
 				
 				return Rx.Observable.of(dataset());
+			},
+			getLastLevelQueried: function () {
+				return this._lastLevelQueried;
 			}
 		};
 	}

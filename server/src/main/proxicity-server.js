@@ -17,7 +17,7 @@ exports.create = (config) => {
 	app.use(express.static(config.webclient));
 	
 	app.get('/dataset', (request, response) => {
-		config.provider.getDataset().subscribe((dataset) => {
+		config.provider.getDataset(request.query.level || 'home').subscribe((dataset) => {
 			response.json(dataset);
 		}, (error) => {
 			response.status(500).json({message: error.message});

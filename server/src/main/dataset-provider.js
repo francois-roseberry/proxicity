@@ -1,5 +1,6 @@
 "use strict";
-	
+
+const precondition = require('./infrastructure/contract').precondition;
 const CachedProvider = require('./cached-provider');
 const KijijiListingProvider = require('./kijiji-listing-provider');
 const KijijiDetailsProvider = require('./kijiji-details-provider');
@@ -39,18 +40,28 @@ class DatasetProvider {
 		return this;
 	}
 	
-	getDataset() {
-		// TODO have the other providers append elements to the whole dataset instead of just homes
+	getDataset(level) {
+		precondition(level === 'home' || level === 'district', 'Queried level must be home or district');
+		console.log('Level queried: ' + level);
+		
 		return this._provider.getHomes().map((homes) => {
 			return {
-				attributes: attributes(),
+				attributes: attributesFor(level),
 				data: homes
 			};
 		});
 	}
 }
 
-function attributes() {
+function attributesFor(level) {
+	if (level === 'home') {
+		return attributesForHomeLevel();
+	}
+	
+	return attributesForDistrictLevel();
+}
+
+function attributesForHomeLevel() {
 	return [{
 		id: 'price',
 		name: 'Price',
@@ -62,6 +73,22 @@ function attributes() {
 	}, {
 		id: 'grocery-distance',
 		name: 'Distance to closest grocery',
+		type: 'distance'
+	}];
+}
+
+function attributesForDistrictLevel() {
+	return [{
+		id: 'average-price',
+		name: 'Average price',
+		type: 'currency'
+	}, {
+		id: 'average-grocery-time',
+		name: 'Average time to closest grocery',
+		type: 'time'
+	}, {
+		id: 'average-grocery-distance',
+		name: 'Average distance to closest grocery',
 		type: 'distance'
 	}];
 }
