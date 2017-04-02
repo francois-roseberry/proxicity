@@ -6,7 +6,7 @@ const _ = require('underscore');
 const key = require('../../google_maps_api.key.json').key;
 const path = require('path');
 
-describe('A dataset provider', function () {
+describe.only('A dataset provider', function () {
 	this.timeout(10000);
 	
 	const CACHE_PATH = '../cache/';

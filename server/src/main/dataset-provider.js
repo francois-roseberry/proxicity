@@ -42,12 +42,11 @@ class DatasetProvider {
 	
 	getDataset(level) {
 		precondition(level === 'home' || level === 'district', 'Queried level must be home or district');
-		console.log('Level queried: ' + level);
 		
 		return this._provider.getHomes().map((homes) => {
 			return {
 				attributes: attributesFor(level),
-				data: homes
+				data: dataFor(level)
 			};
 		});
 	}
