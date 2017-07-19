@@ -8,7 +8,7 @@
     "url": "git+https://gitlab.com/froseberry/proxicity.git"
   },
   "scripts": {
-    "start": "node src/main/server.js ../client",
+    "start": "node src/main/main.js -w ../client/target/dist -c ../cache",
     "lint": "jshint --config build/jshintrc src",
     "pretest": "npm run lint && rm -f *.test.json",
     "test": "mocha \"src/test\"",
