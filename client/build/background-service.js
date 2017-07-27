@@ -1,20 +1,24 @@
 (function() {
 	"use strict";
-	
+
 	var childProcess = require('child_process');
 	var readline = require('readline');
-	
+
 	exports.launchServiceProcess = function (configuration, done) {
 		var serviceProcess = launchProcess(configuration);
-		
+
 		serviceProcess.on('error', function (error) {
 			console.log(error);
 		});
-		
+
+		serviceProcess.on('message', function (message) {
+			console.log(message);
+		});
+
 		registerCleanupOnExit(configuration.name, serviceProcess);
         ensureServiceReadyToOperate(serviceProcess, configuration, done);
 	};
-	
+
 	function launchProcess(configuration) {
 		return childProcess.spawn(
             configuration.executable,
@@ -23,14 +27,14 @@
                 env: configuration.env
             });
 	}
-	
+
 	function registerCleanupOnExit(serviceName, serviceProcess) {
         process.on("exit", function () {
             console.log("Stopping background service: " + serviceName);
             serviceProcess.kill();
         });
-    }
-	
+  }
+
 	function ensureServiceReadyToOperate(serviceProcess, configuration, serviceReadyCallback) {
         var serviceReady = false;
         var serviceName = configuration.name;
@@ -99,7 +103,7 @@
 
         lineReader.on('line', lineCallback);
     }
-	
+
 	function announcingServiceReady(logMessage, configuration) {
         return configuration.readyPattern.test(logMessage);
     }

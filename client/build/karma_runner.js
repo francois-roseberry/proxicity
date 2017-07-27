@@ -3,15 +3,20 @@
 
     var childProcess = require("child_process");
     var readline = require('readline');
+    var os = require('os');
 
     exports.runTests = function (grunt, testCompleteCallback) {
-        var karmaProcess = childProcess.spawn(
-            "sh", [
-				"-c",
-				"node_modules/karma/bin/karma run build/karma.conf.js"
-            ]);
+      var executable = './node_modules/karma/bin/karma';
+  		var args = ['run', 'build/karma.conf.js'];
+  		if (os.platform() === 'win32') {
+  			executable = 'sh';
+  			args = ['-c', 'node_modules/karma/bin/karma run build/karma.conf.js'];
+  		}
 
-        monitorOutputForTestFailures(karmaProcess, grunt, testCompleteCallback);
+      var karmaProcess = childProcess.spawn(
+          executable, args);
+
+      monitorOutputForTestFailures(karmaProcess, grunt, testCompleteCallback);
     };
 
     function monitorOutputForTestFailures(karmaProcess, grunt, testCompleteCallback) {
