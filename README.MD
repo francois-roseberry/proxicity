@@ -1,5 +1,7 @@
 # Proxicity
 
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](https://gruntjs.com/)
+
 Calculator of service proximity for homes
 
 Server is in nodejs, client is in javascript
