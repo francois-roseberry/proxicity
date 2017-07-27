@@ -22,12 +22,12 @@ module.exports = function (config) {
             {pattern: 'target/dist/images/*', included: false, served: true},
 			'target/stagger/src/**/*.js'
         ],
-		
+
 		// list of files to exclude
         exclude: [
             './target/stagger/src/bootstrap.js'
         ],
-		
+
 		// Proxy an application in the karma domain name, to prevent CORS issues
         proxies: {
             '/proxicity/': 'http://localhost:3000/',
@@ -36,7 +36,7 @@ module.exports = function (config) {
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-        reporters: ['dots'],
+        reporters: ['spec'],
 
         // enable / disable colors in the output (reporters and logs)
         colors: true,
