@@ -10,7 +10,7 @@
      * @param container     D3 container of the indicator.
      * @param message       Optional. Message to display with the indicator.
      */
-    exports.render = function (container, message) {
+    exports.render = (container, message) => {
         if (message) {
             precondition(_.isString(message), 'LoadingIndicator require the message to be a string');
 
