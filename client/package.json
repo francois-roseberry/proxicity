@@ -8,7 +8,7 @@
     "url": "https://gitlab.com/francois-roseberry/proxicity.git"
   },
   "scripts": {
-    "test": "karma start build/karma.ci.conf.js",
+    "test": "npm run package && karma start build/karma.ci.conf.js",
     "package": "grunt package",
     "background": "grunt background",
     "check": "grunt check"
