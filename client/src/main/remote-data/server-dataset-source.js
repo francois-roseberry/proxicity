@@ -1,35 +1,35 @@
-(function() {
-	'use strict';
-	
-	var RestClient = require('./rest-client');
-	var Attribute = require('./attribute');
-	var precondition = require('./contract').precondition;
+'use strict';
 
-	exports.newSource = function (url) {
-		precondition(_.isString(url) && url.length > 0, 'ServerDatasetSource requires an url');
-		
-		return new ServerDatasetSource(url);
-	};
+var RestClient = require('./rest-client');
+var Attribute = require('./attribute');
+var precondition = require('./contract').precondition;
 
-	function ServerDatasetSource(url) {
+exports.newSource = (url) => {
+	precondition(_.isString(url) && url.length > 0, 'ServerDatasetSource requires an url');
+
+	return new ServerDatasetSource(url);
+};
+
+class ServerDatasetSource {
+	constructor(url) {
 		this._url = url;
 	}
-	
-	ServerDatasetSource.prototype.getDataset = function () {
+
+	getDataset() {
 		return RestClient.get(this._url)
-			.map(function (dataset) {
+			.map((dataset) => {
 				return {
 					attributes: toAttributes(dataset.attributes),
 					data: dataset.data
 				};
 			});
-	};
-	
-	function toAttributes(attributesJson) {
-		return _.map(attributesJson, function (attributeJson) {
-			
-			// TODO : handle the parsing errors
-			return Attribute[attributeJson.type](attributeJson.id, attributeJson.name);
-		});
 	}
-}());
+}
+
+function toAttributes(attributesJson) {
+	return _.map(attributesJson, (attributeJson) => {
+
+		// TODO : handle the parsing errors
+		return Attribute[attributeJson.type](attributeJson.id, attributeJson.name);
+	});
+}

@@ -1,14 +1,14 @@
 (function() {
 	"use strict";
-	
+
 	var ApplicationTask = require('./launch-proxicity-task');
 	var Source = require('./server-dataset-source');
 	var ApplicationWidget = require('./app-widget');
-	
+
 	var failFast = require('./fail-fast');
-	
+
 	failFast.crashOnUnhandledException();
-    	failFast.crashOnResourceLoadingError();
+	failFast.crashOnResourceLoadingError();
 
 	$(document).ready(startApplication());
 
@@ -19,4 +19,3 @@
 		ApplicationWidget.render(container, task);
 	}
 }());
-
